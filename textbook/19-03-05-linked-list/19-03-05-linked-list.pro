@@ -1,7 +1,7 @@
 TEMPLATE = app
 TARGET = 19_03_05_linked_list
 
-CONFIG += c++20 cmdline
+CONFIG += c++20 cmdline console
 
 INCLUDEPATH += include
 
