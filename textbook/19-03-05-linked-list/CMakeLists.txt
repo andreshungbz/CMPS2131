@@ -5,5 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 include_directories(include)
 
-add_executable(19_03_05_linked_list src/main.cpp
+add_executable(19_03_05_linked_list src/linked-list-driver.cpp
+        include/Stack.h
+        src/stack-driver.cpp
 )

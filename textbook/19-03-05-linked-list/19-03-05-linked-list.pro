@@ -5,7 +5,7 @@ CONFIG += c++20 cmdline console
 
 INCLUDEPATH += include
 
-SOURCES += src/main.cpp \
+SOURCES += src/linked-list-driver.cpp \
 
 HEADERS += include/List.h \
            include/ListNode.h
