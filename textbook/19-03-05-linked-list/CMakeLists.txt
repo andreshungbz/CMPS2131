@@ -7,4 +7,5 @@ include_directories(include)
 
 add_executable(19_03_05_stack
         src/stack-driver.cpp
+        include/Stackcomposition.h
 )

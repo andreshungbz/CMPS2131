@@ -1,7 +1,7 @@
 // A simple stack program
 
 #include <iostream>
-#include "Stack.h" // Stack class definition
+#include "Stackcomposition.h" // Stack class definition
 
 int main() {
     Stack<int> intStack; // create Stack of ints
