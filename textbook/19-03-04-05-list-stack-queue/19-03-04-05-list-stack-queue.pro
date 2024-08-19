@@ -1,14 +1,17 @@
 TEMPLATE = app
-TARGET = 19_03_05_linked_list
+TARGET = 19_03_04_05_list_stack_queue
 
 CONFIG += c++20 cmdline console
 
 INCLUDEPATH += include
 
-SOURCES += src/linked-list-driver.cpp \
+SOURCES += src/queue-driver.cpp \
 
 HEADERS += include/List.h \
-           include/ListNode.h
+           include/ListNode.h \
+           include/Stack.h \
+           include/Stackcomposition.h \
+           include/Queue.h \
 
 # Unix/Linux build folders
 unix {
