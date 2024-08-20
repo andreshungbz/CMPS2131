@@ -55,16 +55,12 @@ void Tree<NODETYPE>::insertNodeHelper(TreeNode<NODETYPE>** ptr, const NODETYPE& 
     if (*ptr == nullptr) {
         *ptr = new TreeNode<NODETYPE>{value};
     } else { // subtree is not empty
-        // data to insert is less than data in current node
-        if (value < (*ptr)->data) {
+        if (value < (*ptr)->data) { // data to insert is less than data in current node
             insertNodeHelper(&((*ptr)->leftPtr), value);
-        } else {
-            // data to insert is greater than data in current node
-            if (value > (*ptr)->data) {
-                insertNodeHelper(&((*ptr)->rightPtr), value);
-            } else { // duplicate data value ignored
-                std::cout << value << " dup" << std::endl;
-            }
+        } else if (value > (*ptr)->data) { // data to insert is greater than data in current node
+            insertNodeHelper(&((*ptr)->rightPtr), value);
+        } else { // duplicate data value ignored
+            std::cout << value << " dup" << std::endl;
         }
     }
 }
