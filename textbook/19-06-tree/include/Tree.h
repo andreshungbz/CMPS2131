@@ -37,6 +37,7 @@ private:
 
     // utility function called by insertNode; receives a pointer
     // to a pointer so that the function can modify pointer's value
+    // in other words, set the rootPtr, leftPtr, or rightPtr of new TreeNode
     void insertNodeHelper(TreeNode<NODETYPE>** ptr, const NODETYPE& value);
 
     // utility function to perform preorder traversal of Tree
