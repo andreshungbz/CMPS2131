@@ -68,6 +68,7 @@ void Tree<NODETYPE>::insertNodeHelper(TreeNode<NODETYPE>** ptr, const NODETYPE& 
 template<typename NODETYPE>
 void Tree<NODETYPE>::preOrderHelper(TreeNode<NODETYPE>* ptr) const {
     if (ptr != nullptr) {
+        // prints roots first then leaves
         std::cout << ptr->data << ' '; // process node
         preOrderHelper(ptr->leftPtr); // traverse left subtree
         preOrderHelper(ptr->rightPtr); // traverse right subtree
@@ -92,6 +93,7 @@ void Tree<NODETYPE>::inOrderHelper(TreeNode<NODETYPE>* ptr) const {
 template<typename NODETYPE>
 void Tree<NODETYPE>::postOrderHelper(TreeNode<NODETYPE>* ptr) const {
     if (ptr != nullptr) {
+        // prints leaves first then roots
         postOrderHelper(ptr->leftPtr); // traverse left subtree
         postOrderHelper(ptr->rightPtr); // traverse right subtree
         std::cout << ptr->data << ' '; // process node
