@@ -42,7 +42,7 @@ private:
     // utility function to perform preorder traversal of Tree
     void preOrderHelper(TreeNode<NODETYPE>* ptr) const;
 
-    // utiltiy function to perform inorder traversal of Tree
+    // utility function to perform inorder traversal of Tree
     void inOrderHelper(TreeNode<NODETYPE>* ptr) const;
 
     // utility function to perform postorder traversal of Tree
