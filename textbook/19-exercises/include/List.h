@@ -126,6 +126,12 @@ public:
     // extra function for exercise 19-07
     void insertNode(ListNode<NODETYPE>* nodeBefore, const NODETYPE& value) {
         ListNode<NODETYPE>* newPtr{getNewNode(value)};
+
+        if (isEmpty()) {
+            firstPtr = newPtr;
+            lastPtr = newPtr;
+        }
+
         newPtr->nextPtr = nodeBefore->nextPtr;
         nodeBefore->nextPtr = newPtr;
     }
