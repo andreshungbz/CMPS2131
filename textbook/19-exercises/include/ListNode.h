@@ -13,6 +13,11 @@ class ListNode {
     // friend declaration for exercise 19-06 to access private/protected members
     template<typename T>
     friend void concatenate(List<T>& a, const List<T>& b);
+
+    // friend declaration for exercise 19-07
+    template<typename T>
+    friend void merge(List<T>& a, const List<T>& b, const List<T>& c);
+
 public:
     explicit ListNode(const NODETYPE& info) : data{info}, nextPtr{nullptr} {} // constructor
     NODETYPE getData() const { return data; }

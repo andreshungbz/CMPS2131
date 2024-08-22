@@ -12,6 +12,10 @@ class List {
     template<typename T>
     friend void concatenate(List<T>& a, const List<T>& b);
 
+    // friend declaration for exercise 19-07
+    template<typename T>
+    friend void merge(List<T>& a, const List<T>& b, const List<T>& c);
+
 public:
     ~List() {
         if (!isEmpty()) {
@@ -118,6 +122,13 @@ public:
 
         std::cout << "\n\n";
     };
+
+    // extra function for exercise 19-07
+    void insertNode(ListNode<NODETYPE>* nodeBefore, const NODETYPE& value) {
+        ListNode<NODETYPE>* newPtr{getNewNode(value)};
+        newPtr->nextPtr = nodeBefore->nextPtr;
+        nodeBefore->nextPtr = newPtr;
+    }
 
 private:
     ListNode<NODETYPE>* firstPtr{nullptr};
