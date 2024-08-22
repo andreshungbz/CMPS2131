@@ -59,14 +59,16 @@ void insertNodeAtEnd(Node* head, int newValue) {
     current->next = newNodePtr;
 }
 
-// Function to insert node after node 3
-void insert4thNode(Node* head, int newValue) {
+// Function to insert node
+void insertNode(Node*& head, int position, int newValue) {
     Node* current{head};
 
-    // set pointer to the 3rd node
-    // needs to traverse 2 times from node 1 (NODE1 -> NODE2 -> NODE3)
-    int traverseCounter{2};
-    while (traverseCounter) {
+    // position is the node number which the new node should go after
+    // traversals are the number of movement steps needed to get to node at position
+    // e.g. position of 3 is 3rd node and takes two traversals from node 1
+    // NODE1 -> NODE2 -> NODE3 -> [new NODE goes here]
+    int traverseCounter{position - 1};
+    while (traverseCounter > 0) {
         current = current->next;
 
         if (current == nullptr) {
@@ -82,10 +84,13 @@ void insert4thNode(Node* head, int newValue) {
     newNodePtr->value = newValue;
     newNodePtr->next = nullptr;
 
-    // list conveniently only has three items
-    if (current->next == nullptr) {
+    // beginning of list
+    if (traverseCounter < 0) {
+        newNodePtr->next = current;
+        head = newNodePtr;
+    } else if (current->next == nullptr) { // end of list
         current->next = newNodePtr;
-    } else { // the new node needs to point to the old 4th element
+    } else { // the new node needs to point to next element
         newNodePtr->next = current->next;
         current->next = newNodePtr;
     }
@@ -151,7 +156,7 @@ int main() {
     printList(head);
 
     // Insert after the 3rd element
-    insert4thNode(head, 10);
+    insertNode(head, 3, 10);
     std::cout << "List after adding 10 after the 3rd element: ";
     printList(head);
 
