@@ -23,7 +23,7 @@ int main() {
     List<int> list{};
 
     for (int i{0}; i < 25; ++i) {
-
+        list.insertAtFront(roll100());
     }
 
     list.print();
