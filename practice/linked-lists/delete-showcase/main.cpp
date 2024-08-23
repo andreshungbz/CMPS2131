@@ -24,13 +24,8 @@ public:
 
     void insertAtFront(int value) {
         Node* newPtr{new Node{value}};
-
-        if (isEmpty()) {
-            head = newPtr;
-        } else {
-            newPtr->next = head;
-            head = newPtr;
-        }
+        newPtr->next = head;
+        head = newPtr;
     }
 
     void insertAtBack(int value) {
@@ -51,95 +46,107 @@ public:
 
     // adds node after node at given position
     void insert(int position, int value) {
-        Node* newPtr{new Node{value}};
-        int traversals{position - 1};
+        // invalid position
+        if (position < 1) {
+            std::cerr << "Invalid position\n";
+            return;
+        }
 
-        if (traversals == 0) { // empty list
-            head = newPtr;
-        } else if (traversals < 0) { // beginning of list
-            newPtr->next = head;
-            head = newPtr;
-        } else { // traversals necessary
-            Node* currentPtr{head};
+        // position 1 essentially is inserting at front
+        if (position == 1) {
+            insertAtFront(value);
+            return;
+        }
 
-            while (traversals) {
-                // don't traverse past the end of list
-                if (currentPtr->next != nullptr) {
-                    currentPtr = currentPtr->next;
-                }
-
-                --traversals;
-            }
-
-            // new node is at the end of list
-            if (currentPtr->next == nullptr) {
-                currentPtr->next = newPtr;
-            } else { // there is a node after to link to new node
-                newPtr->next = currentPtr->next;
-                currentPtr->next = newPtr;
+        Node* currentPtr{head};
+        // - 2 for traversal adjustment
+        // e.g. to add 3rd node, we need to reach node 2, which is 1 away from head node
+        for (int i{position}; (i - 2) > 0; --i) {
+            if (currentPtr->next != nullptr) { // if position is larger than list length, stay at last node
+                currentPtr = currentPtr->next;
             }
         }
+
+        // if we're at the last node, it is essentially insert at back
+        if (currentPtr->next == nullptr) {
+            insertAtBack(value);
+            return;
+        }
+
+        // add new node accounting for linking node that goes after the new one
+        Node* newPtr{new Node{value}};
+        newPtr->next = currentPtr->next;
+        currentPtr->next = newPtr;
     }
 
     void removeAtFront() {
         if (isEmpty()) {
-            std::cout << "List is empty.\n";
-        } else {
-            Node* tempPtr{head};
-            head = head->next;
-            delete tempPtr;
+            std::cerr << "List is empty.\n";
+            return;
         }
+
+        Node* tempPtr{head};
+        head = head->next;
+        delete tempPtr;
 
     }
 
     void removeAtBack() {
         if (isEmpty()) {
-            std::cout << "List is empty.\n";
-        } else {
-            Node* currentPtr{head};
-
-            // move pointer to second to last node
-            while (currentPtr->next->next != nullptr) {
-                currentPtr = currentPtr->next;
-            }
-
-            // delete last node from second-to-last node
-            delete currentPtr->next;
-            // set second-to-last node as last node
-            currentPtr->next = nullptr;
+            std::cerr << "List is empty.\n";
+            return;
         }
+
+        // if there is only one node in the list
+        if (head->next == nullptr) {
+            delete head;
+            head = nullptr;
+            return;
+        }
+
+        Node* currentPtr{head};
+        // move pointer to second to last node
+        while (currentPtr->next->next != nullptr) {
+            currentPtr = currentPtr->next;
+        }
+
+        // delete last node from second-to-last node
+        delete currentPtr->next;
+        // set second-to-last node as last node
+        currentPtr->next = nullptr;
     }
 
     // removes node at given position
     void remove(int position) {
-        if (isEmpty()) {
-            std::cout << "List is empty.\n";
-        } else {
-            Node* tempPtr{nullptr};
-            Node* currentPtr{head};
-            int traversals{position - 1};
+        if (position < 1) {
+            std::cerr << "Invalid position\n";
+            return;
+        }
 
-            if (traversals == 0) { // delete first node
-                removeAtFront();
-            } else {
-                while (traversals - 1 > 0) {
-                    if (currentPtr->next != nullptr) {
-                        currentPtr = currentPtr->next;
-                    }
+        if (position == 1) {
+            removeAtFront();
+            return;
+        }
 
-                    --traversals;
-                }
-
-                // remove node at the end of list
-                if (currentPtr->next == nullptr) {
-                    removeAtBack();
-                } else { // there is a node after to link to the node before
-                    tempPtr = currentPtr->next;
-                    currentPtr->next = currentPtr->next->next;
-                    delete tempPtr;
-                }
+        Node* currentPtr{head};
+        // - 2 for traversal adjustment
+        // e.g. to delete 3rd node, we need to reach node 2, which is 1 away from head node
+        for (int i{position}; (i - 2) > 0; --i) {
+            if (currentPtr->next->next != nullptr) { // if position is larger than list length, stay at last node
+                currentPtr = currentPtr->next;
             }
         }
+
+        // if we're at the second-to-last node, it is essentially remove at back
+        if (currentPtr->next == nullptr) {
+            removeAtBack();
+            return;
+        }
+
+        // remove node accounting for linking node that takes it position
+        Node* tempPtr{currentPtr->next};
+        currentPtr->next = currentPtr->next->next;
+        delete tempPtr;
     }
 
     bool isEmpty() {
@@ -171,7 +178,7 @@ int main() {
     std::cout << "Initial List:";
     list.print();
 
-    std::cout << "Add 5 after 3rd Node:";
+    std::cout << "Add 5 as 3rd Node:";
     list.insert(3, 5);
     list.print();
 
@@ -185,14 +192,6 @@ int main() {
 
     std::cout << "Remove 2nd Node:";
     list.remove(2);
-    list.print();
-
-    std::cout << "Remove 2nd Node:";
-    list.remove(2);
-    list.print();
-
-    std::cout << "Remove 2nd Node:";
-    list.remove(1);
     list.print();
 
     return 0;
