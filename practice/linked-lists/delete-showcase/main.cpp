@@ -132,7 +132,7 @@ public:
         // - 2 for traversal adjustment
         // e.g. to delete 3rd node, we need to reach node 2, which is 1 away from head node
         for (int i{position}; (i - 2) > 0; --i) {
-            if (currentPtr->next->next != nullptr) { // if position is larger than list length, stay at last node
+            if (currentPtr->next->next != nullptr) { // if position is larger than list length, stay at second-to-last node
                 currentPtr = currentPtr->next;
             }
         }
