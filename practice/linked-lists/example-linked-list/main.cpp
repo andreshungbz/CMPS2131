@@ -38,6 +38,7 @@ void printOddNumbers(Node* head) {
 void insertAtBeginning(Node*& head, int newValue) {
     Node* newNode = new Node();
     newNode->value = newValue;
+
     newNode->next = head; // Point new node's next to the current head
     head = newNode;       // Update head to point to the new node
 }
@@ -59,41 +60,98 @@ void insertNodeAtEnd(Node* head, int newValue) {
     current->next = newNodePtr;
 }
 
-// Function to insert node
+// Function to insert node at any position
 void insertNode(Node*& head, int position, int newValue) {
+    if (position < 1) {
+        std::cerr << "Invalid position\n";
+        return;
+    }
+
+    // position 1 is essentially inserting at beginning
+    if (position == 1) {
+        insertAtBeginning(head, newValue);
+        return;
+    }
+
     Node* current{head};
-
-    // position is the node number which the new node should go after
-    // traversals are the number of movement steps needed to get to node at position
-    // e.g. position of 3 is 3rd node and takes two traversals from node 1
-    // NODE1 -> NODE2 -> NODE3 -> [new NODE goes here]
-    int traverseCounter{position - 1};
-    while (traverseCounter > 0) {
-        current = current->next;
-
-        if (current == nullptr) {
-            std::cout << "List not long enough. Exiting.\n";
-            return;
+    // - 2 for traversal adjustment
+    // e.g. to add 3rd node, we need to reach node 2, which is 1 away from head node
+    for (int i{position}; (i - 2) > 0; --i) {
+        if (current->next != nullptr) { // if position is larger than list length, stay at last node
+            current = current->next;
         }
+    }
 
-        --traverseCounter;
+    // if we're at the last node, it is essentially insert at end
+    if (current->next == nullptr) {
+        insertNodeAtEnd(head, newValue);
+        return;
     }
 
     // create new node
     Node* newNodePtr{new Node{}};
     newNodePtr->value = newValue;
-    newNodePtr->next = nullptr;
 
-    // beginning of list
-    if (traverseCounter < 0) {
-        newNodePtr->next = current;
-        head = newNodePtr;
-    } else if (current->next == nullptr) { // end of list
-        current->next = newNodePtr;
-    } else { // the new node needs to point to next element
-        newNodePtr->next = current->next;
-        current->next = newNodePtr;
+    // link with list accounting for rest of list
+    newNodePtr->next = current->next;
+    current->next = newNodePtr;
+}
+
+void deleteNodeAtBeginning(Node*& head) {
+    Node* tempPtr{head};
+    head = head->next;
+    delete tempPtr;
+}
+
+void deleteNodeAtEnd(Node* head) {
+    if (head->next == nullptr) {
+        delete head;
+        head = nullptr;
+        return;
     }
+
+    Node* current{head};
+    // move pointer to second-to-last node
+    while (current->next->next != nullptr) {
+        current = current->next;
+    }
+
+    // delete last node from the second-to-last node
+    delete current->next;
+    // set new last node
+    current->next = nullptr;
+}
+
+void deleteNode(Node*& head, int position) {
+    if (position < 1) {
+        std::cerr << "Invalid position\n";
+        return;
+    }
+
+    if (position == 1) {
+        deleteNodeAtBeginning(head);
+        return;
+    }
+
+    Node* current{head};
+    // - 2 for traversal adjustment
+    // e.g. to delete 3rd node, we need to reach node 2, which is 1 away from head node
+    for (int i{position}; (i - 2) > 0; --i) {
+        if (current->next->next != nullptr) { // if position is larger than list length, stay at second-to-last node
+            current = current->next;
+        }
+    }
+
+    // if we're at the second-to-last node, it is essentially remove at end
+    if (current->next == nullptr) {
+        deleteNodeAtEnd(head);
+        return;
+    }
+
+    // remove node accounting for linking node that takes it position
+    Node* tempPtr{current->next};
+    current->next = current->next->next;
+    delete tempPtr;
 }
 
 // Function to double all values in the list
@@ -155,9 +213,24 @@ int main() {
     std::cout << "Doubled list: ";
     printList(head);
 
-    // Insert after the 3rd element
-    insertNode(head, 3, 10);
+    // Insert 4th element
+    insertNode(head, 4, 10);
     std::cout << "List after adding 10 after the 3rd element: ";
+    printList(head);
+
+    // Remove node at beginning
+    deleteNodeAtBeginning(head);
+    std::cout << "List after deletion at the beginning: ";
+    printList(head);
+
+    // Remove node at end
+    deleteNodeAtEnd(head);
+    std::cout << "List after deletion at the end: ";
+    printList(head);
+
+    // Delete 2nd element
+    deleteNode(head, 3);
+    std::cout << "List after deleting 3rd element: ";
     printList(head);
 
     // Clean up allocated memory
