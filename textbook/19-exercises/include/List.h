@@ -16,6 +16,10 @@ class List {
     template<typename T>
     friend void merge(List<T>& a, const List<T>& b, const List<T>& c);
 
+    // friend declaration for exercise 19-09
+    template<typename T>
+    friend List<T> createReverseList(const List<T>& list);
+
 public:
     ~List();
     void insertAtFront(const NODETYPE& value);
