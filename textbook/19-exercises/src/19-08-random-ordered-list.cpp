@@ -13,17 +13,11 @@ int roll100() {
     return dice(mt);
 }
 
-// works best starting with an empty list
-template<typename T>
-void insertOrdered(List<T>& list, const T& value) {
-
-}
-
 int main() {
     List<int> list{};
 
     for (int i{0}; i < 25; ++i) {
-        list.insertAtFront(roll100());
+        list.insertOrderedNode(roll100());
     }
 
     list.print();

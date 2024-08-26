@@ -136,6 +136,36 @@ public:
         nodeBefore->nextPtr = newPtr;
     }
 
+    // extra function for exercise 19-08
+    void insertOrderedNode(const NODETYPE& value) {
+        if (isEmpty()) {
+            ListNode<NODETYPE>* newPtr{getNewNode(value)};
+            firstPtr = newPtr;
+            lastPtr = newPtr;
+            return;
+        }
+
+        if (firstPtr->getData() >= value) {
+            insertAtFront(value);
+            return;
+        }
+
+        if (lastPtr->getData() <= value) {
+            insertAtBack(value);
+            return;
+        }
+
+        ListNode<NODETYPE>* currentPtr{firstPtr};
+        while (true) {
+            if (currentPtr->nextPtr->getData() >= value) {
+                insertNode(currentPtr, value);
+                return;
+            }
+
+            currentPtr = currentPtr->nextPtr;
+        }
+    }
+
 private:
     ListNode<NODETYPE>* firstPtr{nullptr};
     ListNode<NODETYPE>* lastPtr{nullptr};
