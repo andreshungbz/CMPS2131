@@ -8,4 +8,5 @@ include_directories(include)
 add_executable(19_exercises
         include/ListNode.h
         include/List.h
-        src/19-09-reverse-copy-list.cpp)
+        include/Stack.h
+        src/19-10-sentence-reverse-stack.cpp)
