@@ -18,6 +18,15 @@ void printList(Node* head) {
     cout << endl;
 }
 
+void printListReverse(Node* head) {
+    if (head->next == nullptr) {
+        return;
+    }
+
+    printListReverse(head->next);
+    std::cout << head->value << ", ";
+}
+
 // Function to print only odd numbers
 void printOddNumbers(Node* head) {
     Node* current{head};
@@ -232,6 +241,10 @@ int main() {
     deleteNode(head, 3);
     std::cout << "List after deleting 3rd element: ";
     printList(head);
+
+    // Print list in reverse
+    std::cout << "Reverse List: ";
+    printListReverse(head);
 
     // Clean up allocated memory
     delete one;
