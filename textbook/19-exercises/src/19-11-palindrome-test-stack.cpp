@@ -39,7 +39,7 @@ bool isPalindrome(Stack<T>& stack, const char* word) {
         if (stackLetter != *word) {
             return false;
         }
-
+        
         ++word;
     }
 
