@@ -9,4 +9,4 @@ add_executable(19_exercises
         include/ListNode.h
         include/List.h
         include/Stack.h
-        src/19-10-sentence-reverse-stack.cpp)
+        src/19-11-palindrome-test-stack.cpp)
