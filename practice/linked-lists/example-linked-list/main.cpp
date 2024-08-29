@@ -226,12 +226,18 @@ void insertNodeAtPosition(Node*& head, int position, int newValue) {
 void insertNodeAfterValue(Node* head, int targetValue, int newValue) {
     // empty list
     if (head->next == nullptr) {
-        insertAtBeginning(head, newValue);
+        std::cout << "Target value not found.\n";
         return;
     }
 
-    while (head->value != targetValue) {
+    while (head != nullptr && head->value != targetValue) {
         head = head->next;
+    }
+
+    // if there is no node with given target value
+    if (head == nullptr) {
+        std::cout << "Target value not found.\n";
+        return;
     }
 
     // if target node happens to be the last node
