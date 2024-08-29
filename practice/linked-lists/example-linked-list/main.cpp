@@ -10,6 +10,8 @@ public:
     Node* next;
 };
 
+// PRINTING FUNCTIONS
+
 // Function to print the linked list
 void printList(Node* head) {
     Node* current = head;
@@ -46,6 +48,8 @@ void printOddNumbers(Node* head) {
     std::cout << '\n';
 }
 
+// INSERTING FUNCTIONS
+
 // Function to insert a new node at the beginning of the list
 void insertAtBeginning(Node*& head, int newValue) {
     Node* newNode = new Node();
@@ -73,7 +77,7 @@ void insertNodeAtEnd(Node* head, int newValue) {
 }
 
 // Function to insert node at any position
-void insertNode(Node*& head, int position, int newValue) {
+void insertNodeAtPosition(Node*& head, int position, int newValue) {
     if (position < 1) {
         std::cerr << "Invalid position\n";
         return;
@@ -109,6 +113,32 @@ void insertNode(Node*& head, int position, int newValue) {
     current->next = newNodePtr;
 }
 
+// Function to insert node after the first node of a given value
+void insertNodeAfterValue(Node* head, int targetValue, int newValue) {
+    // empty list
+    if (head->next == nullptr) {
+        insertAtBeginning(head, newValue);
+        return;
+    }
+
+    while (head->value != targetValue) {
+        head = head->next;
+    }
+
+    // if target node happens to be the last node
+    if (head->next == nullptr) {
+        insertNodeAtEnd(head, newValue);
+        return;
+    }
+
+    Node* newNodePtr{new Node()};
+    newNodePtr->value = newValue;
+    newNodePtr->next = head->next;
+    head->next = newNodePtr;
+}
+
+// DELETING FUNCTIONS
+
 void deleteNodeAtBeginning(Node*& head) {
     Node* tempPtr{head};
     head = head->next;
@@ -134,7 +164,7 @@ void deleteNodeAtEnd(Node* head) {
     current->next = nullptr;
 }
 
-void deleteNode(Node*& head, int position) {
+void deleteNodeAtPosition(Node*& head, int position) {
     if (position < 1) {
         std::cerr << "Invalid position\n";
         return;
@@ -165,6 +195,8 @@ void deleteNode(Node*& head, int position) {
     current->next = current->next->next;
     delete tempPtr;
 }
+
+// MISC FUNCTIONS
 
 // Function to double all values in the list
 void doubleValues(Node* head) {
@@ -226,7 +258,7 @@ int main() {
     printList(head);
 
     // Insert 4th element
-    insertNode(head, 4, 10);
+    insertNodeAtPosition(head, 4, 10);
     std::cout << "List after adding 10 after the 3rd element: ";
     printList(head);
 
@@ -241,8 +273,13 @@ int main() {
     printList(head);
 
     // Delete 2nd element
-    deleteNode(head, 3);
+    deleteNodeAtPosition(head, 3);
     std::cout << "List after deleting 3rd element: ";
+    printList(head);
+
+    // Insert node after the node with value 4
+    insertNodeAfterValue(head, 4, 5);
+    std::cout << "List after adding 5 after the node with value 4: ";
     printList(head);
 
     // Print list in reverse
