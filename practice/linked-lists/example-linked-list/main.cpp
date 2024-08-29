@@ -1,7 +1,9 @@
+// Singly-linked List Demo
+
 #include <iostream>
 using namespace std;
 
-// Creating a node
+// Node class
 class Node {
 public:
     int value;
@@ -18,8 +20,9 @@ void printList(Node* head) {
     cout << endl;
 }
 
+// Print linked list in reverse
 void printListReverse(Node* head) {
-    if (head->next == nullptr) {
+    if (head == nullptr) {
         return;
     }
 
