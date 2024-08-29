@@ -246,6 +246,7 @@ void insertNodeAfterValue(Node* head, int targetValue, int newValue) {
         return;
     }
 
+    // add new node and link with rest of list
     Node* newNodePtr{new Node()};
     newNodePtr->value = newValue;
     newNodePtr->next = head->next;
