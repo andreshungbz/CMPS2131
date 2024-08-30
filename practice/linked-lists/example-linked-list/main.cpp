@@ -38,6 +38,8 @@ void deleteNodeAtBeginning(Node*& head);
 void deleteNodeAtEnd(Node* head);
 // Delete node @ given position
 void deleteNodeAtPosition(Node*& head, int position);
+// Delete node after first node of given target value
+void deleteNodeWithValue(Node*& head, int targetValue);
 
 // MISC FUNCTIONS
 
@@ -116,6 +118,11 @@ int main() {
     // Insert node after the node with value 4
     insertNodeAfterValue(head, 4, 5);
     std::cout << "List after adding 5 after the node with value 4: ";
+    printList(head);
+
+    // Delete node with value 4
+    deleteNodeWithValue(head, 5);
+    std::cout << "List after deleting first node with value 5: ";
     printList(head);
 
     // Print list in reverse
@@ -260,6 +267,10 @@ void deleteNodeAtBeginning(Node*& head) {
 }
 
 void deleteNodeAtEnd(Node* head) {
+    if (head == nullptr) {
+        return;
+    }
+
     if (head->next == nullptr) {
         delete head;
         head = nullptr;
@@ -308,6 +319,45 @@ void deleteNodeAtPosition(Node*& head, int position) {
     Node* tempPtr{current->next};
     current->next = current->next->next;
     delete tempPtr;
+}
+
+void deleteNodeWithValue(Node*& head, int targetValue) {
+    // empty list
+    if (head == nullptr) {
+        std::cout << "List is empty.\n";
+        return;
+    }
+
+    // if target is the first item in the list
+    if (head->value == targetValue) {
+        deleteNodeAtBeginning(head);
+        return;
+    }
+
+    Node* a{head};
+    Node* b{head};
+
+    // traverse to target node to delete while keeping a trailing pointer behind
+    while (a != nullptr && a->value != targetValue) {
+        b = a;
+        a = a->next;
+    }
+
+    // no target value
+    if (a == nullptr) {
+        std::cout << "Target value not found.\n";
+        return;
+    }
+
+    // if target happens to be the last item in the list
+    if (a->next == nullptr) {
+        deleteNodeAtEnd(head);
+        return;
+    }
+
+    // delete target node and link rest of list
+    b->next = a->next;
+    delete a;
 }
 
 void doubleValues(Node* head) {
