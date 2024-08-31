@@ -31,6 +31,7 @@ void printOdd(Node* head);
 // MUTATING FUNCTIONS
 
 void doubleValues(Node* head);
+void swapValuePairs(Node*& head);
 
 int main()
 {
@@ -98,6 +99,19 @@ int main()
     // doubleValues
     std::cout << "Double every value:";
     doubleValues(listHead);
+    print(listHead);
+
+    // clear list
+    deleteList(listHead);
+    for (int i{1}; i <= 5; ++i) {
+        insertAtEnd(listHead, i);
+    }
+    std::cout << "New List:";
+    print(listHead);
+
+    // swapValuePairs
+    std::cout << "List after value pair swap:";
+    swapValuePairs(listHead);
     print(listHead);
 
     deleteList(listHead);
@@ -335,5 +349,24 @@ void doubleValues(Node* head) {
     while (head != nullptr) {
         head->data = head->data * 2;
         head = head->next;
+    }
+}
+
+void swapValuePairs(Node*& head) {
+    // empty list or only one node in list
+    if (head == nullptr || head->next == nullptr) {
+        return;
+    }
+
+    // swap the data values of each pair of nodes
+    Node* swapPtrA{head};
+    Node* swapPtrB{head->next};
+    while (swapPtrB != nullptr) {
+        int temp{swapPtrA->data};
+        swapPtrA->data = swapPtrB->data;
+        swapPtrB->data = temp;
+
+        swapPtrA = swapPtrB->next;
+        swapPtrB = swapPtrA->next != nullptr ? swapPtrA->next : nullptr;
     }
 }
