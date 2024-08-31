@@ -31,7 +31,7 @@ void printOdd(Node* head);
 // MUTATING FUNCTIONS
 
 void doubleValues(Node* head);
-void swapValuePairs(Node*& head);
+void swapValuePairs(Node* head);
 
 int main()
 {
@@ -353,7 +353,7 @@ void doubleValues(Node* head) {
     }
 }
 
-void swapValuePairs(Node*& head) {
+void swapValuePairs(Node* head) {
     // empty list or only one node in list
     if (head == nullptr || head->next == nullptr) {
         return;
