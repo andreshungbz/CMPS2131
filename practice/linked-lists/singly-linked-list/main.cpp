@@ -95,6 +95,11 @@ int main()
     deleteWithValue(listHead, 2);
     print(listHead);
 
+    // doubleValues
+    std::cout << "Double every value:";
+    doubleValues(listHead);
+    print(listHead);
+
     deleteList(listHead);
 
     return 0;
@@ -320,4 +325,15 @@ void printOdd(Node* head) {
     }
 
     std::cout << '\n';
+}
+
+void doubleValues(Node* head) {
+    if (head == nullptr) {
+        return;
+    }
+
+    while (head != nullptr) {
+        head->data = head->data * 2;
+        head = head->next;
+    }
 }
