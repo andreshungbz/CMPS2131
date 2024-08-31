@@ -346,6 +346,7 @@ void doubleValues(Node* head) {
         return;
     }
 
+    // double every node's data value
     while (head != nullptr) {
         head->data = head->data * 2;
         head = head->next;
