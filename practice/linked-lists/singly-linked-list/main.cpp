@@ -34,6 +34,7 @@ void doubleValues(Node* head);
 void swapValuePairs(Node* head);
 void removeConsecutiveDuplicates(Node* head);
 void removeDuplicates(Node* head);
+void concatenate(Node* headA, Node* headB);
 
 int main()
 {
@@ -142,6 +143,19 @@ int main()
     // removeDuplicates
     std::cout << "List with removed duplicates:";
     removeDuplicates(listHead);
+    print(listHead);
+
+    // create another list
+    Node* listHead2{nullptr};
+    for (int i{1}; i <= 5; ++i) {
+        insertAtBeginning(listHead2, 5);
+    }
+    std::cout << "Another list:";
+    print(listHead2);
+
+    // concatenate
+    std::cout << "Concatenated list:";
+    concatenate(listHead, listHead2);
     print(listHead);
 
     deleteList(listHead);
@@ -462,4 +476,19 @@ void removeDuplicates(Node* head) {
 
         comparePtrA = comparePtrA->next;
     }
+}
+
+void concatenate(Node* headA, Node* headB) {
+    // empty lists
+    if (headA == nullptr || headB == nullptr) {
+        return;
+    }
+
+    // move headA to point to the last node in list A
+    while (headA->next != nullptr) {
+        headA = headA->next;
+    }
+
+    // concatenate
+    headA->next = headB;
 }
