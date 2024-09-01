@@ -1,69 +1,547 @@
+// Doubly-linked List
+
 #include <iostream>
 
+// Node for doubly-linked list
 class Node {
 public:
-    Node* prev{nullptr};
+    Node* prev;
     int data;
-    Node* next{nullptr};
+    Node* next;
 };
 
-void printList(Node* head) {
+// INSERTING FUNCTIONS
+
+void insertAtBeginning(Node*& head, int value);
+void insertAtEnd(Node*& head, int value);
+void insertAfterValue(Node*& head, int target, int value);
+
+// DELETING FUNCTIONS
+
+void deleteAtBeginning(Node*& head);
+void deleteAtEnd(Node*& head);
+void deleteWithValue(Node*& head, int target);
+void deleteList(Node*& head);
+
+// PRINTING FUNCTIONS
+
+void print(const Node* head);
+void printReverse(const Node* head);
+void printOdd(const Node* head);
+
+// MUTATING FUNCTIONS
+
+void doubleValues(Node* head);
+void swapValuePairs(Node* head);
+void removeConsecutiveDuplicates(Node* head);
+void removeDuplicates(Node* head);
+void simpleConcatenate(Node* headA, Node* headB);
+
+// LIST OPERATION FUNCTIONS
+
+Node* concatenate(const Node* headA, const Node* headB);
+
+int main()
+{
+    // list
+    Node* listHead{nullptr};
+
+    // insertAtBeginning
+    for (int i{1}; i <= 5; ++i) {
+        insertAtBeginning(listHead, i);
+    }
+    std::cout << "insertAtBeginning:";
+    print(listHead);
+
+    // insertAtEnd
+    for (int i{1}; i <= 5; ++i) {
+        insertAtEnd(listHead, i);
+    }
+    std::cout << "insertAtEnd:";
+    print(listHead);
+
+    // insertAfterValue
+
+    insertAfterValue(listHead, 3, 9);
+    std::cout << "Insert 9 after node w/ value 3:";
+    print(listHead);
+
+    std::cout << "Insert 9 after node w/ value 10: ";
+    insertAfterValue(listHead, 10, 9);
+
+    deleteList(listHead);
+    std::cout << "Cleared List: ";
+    print(listHead);
+
+    std::cout << "Insert 9 after node w/ value 10: ";
+    insertAfterValue(listHead, 10, 9);
+
+    // printReverse
+    for (int i{1}; i <= 5; ++i) {
+        insertAtEnd(listHead, i);
+    }
+    std::cout << "Initial List:";
+    print(listHead);
+    std::cout << "List printed in reverse:";
+    printReverse(listHead);
+
+    // printOdd
+    std::cout << "\nOdd numbers:";
+    printOdd(listHead);
+
+    // deleteAtBeginning
+    std::cout << "deleteAtBeginning:";
+    deleteAtBeginning(listHead);
+    print(listHead);
+
+    // deleteAtEnd
+    std::cout << "deleteAtEnd:";
+    deleteAtEnd(listHead);
+    print(listHead);
+
+    // deleteWithValue
+    std::cout << "Delete first node with value 3:";
+    deleteWithValue(listHead, 2);
+    print(listHead);
+
+    // doubleValues
+    std::cout << "Double every value:";
+    doubleValues(listHead);
+    print(listHead);
+
+    // clear list
+    deleteList(listHead);
+    for (int i{1}; i <= 5; ++i) {
+        insertAtEnd(listHead, i);
+    }
+    std::cout << "New List:";
+    print(listHead);
+
+    // swapValuePairs
+    std::cout << "List after value pair swap:";
+    swapValuePairs(listHead);
+    print(listHead);
+
+    // clear list
+    deleteList(listHead);
+    for (int i{1}; i <= 5; ++i) {
+        insertAtEnd(listHead, i);
+        insertAtEnd(listHead, i);
+    }
+    deleteWithValue(listHead, 3);
+    deleteWithValue(listHead, 5);
+    std::cout << "New List:";
+    print(listHead);
+
+    // removeConsecutiveDuplicates
+    std::cout << "List with removed consecutive duplicates:";
+    removeConsecutiveDuplicates(listHead);
+    print(listHead);
+
+    // add duplicates
+    for (int i{1}; i <= 5; ++i) {
+        insertAtBeginning(listHead, i);
+    }
     std::cout << "List:";
+    print(listHead);
+
+    // removeDuplicates
+    std::cout << "List with removed duplicates:";
+    removeDuplicates(listHead);
+    print(listHead);
+
+    // create another list
+    Node* listHead2{nullptr};
+    for (int i{1}; i <= 5; ++i) {
+        insertAtBeginning(listHead2, 5);
+    }
+    std::cout << "Another list:";
+    print(listHead2);
+
+    // concatenate
+    std::cout << "Concatenated list:";
+    simpleConcatenate(listHead, listHead2);
+    print(listHead);
+
+    // create another list
+    Node* listHeadA{nullptr};
+    for (int i{1}; i <= 5; ++i) {
+        insertAtBeginning(listHeadA, 1);
+    }
+    std::cout << "List A:";
+    print(listHeadA);
+
+    // create another list
+    Node* listHeadB{nullptr};
+    for (int i{1}; i <= 5; ++i) {
+        insertAtBeginning(listHeadB, 2);
+    }
+    std::cout << "List B:";
+    print(listHeadB);
+
+    // non-mutating concatenate
+    std::cout << "List C (new):";
+    Node* listHeadC{concatenate(listHeadA, listHeadB)};
+    print(listHeadC);
+
+    // clear memory allocation
+    deleteList(listHead);
+    deleteList(listHeadA);
+    deleteList(listHeadB);
+    deleteList(listHeadC);
+
+    return 0;
+}
+
+// INSERTING FUNCTIONS
+
+void insertAtBeginning(Node*& head, int value) {
+    // create new node
+    Node* newPtr{new Node()};
+    newPtr->next = nullptr;
+    newPtr->data = value;
+    newPtr->prev = nullptr;
+
+    // empty list
+    if (head == nullptr) {
+        head = newPtr;
+        return;
+    }
+
+    // link nodes
+    newPtr->next = head;
+    head->prev = newPtr;
+    head = newPtr;
+}
+
+void insertAtEnd(Node*& head, int value) {
+    // empty list
+    if (head == nullptr) {
+        insertAtBeginning(head, value);
+        return;
+    }
+
+    // create new node
+    Node* newPtr{new Node()};
+    newPtr->next = nullptr;
+    newPtr->data = value;
+
+    // create pointer to the last node
+    Node* currentPtr{head};
+    while (currentPtr->next != nullptr) {
+        currentPtr = currentPtr->next;
+    }
+
+    // insert node at the end and link next and prev
+    newPtr->prev = currentPtr;
+    currentPtr->next = newPtr;
+}
+
+void insertAfterValue(Node*& head, int target, int value) {
+    // empty list
+    if (head == nullptr) {
+        std::cout << "Error Inserting: No target value found.\n";
+        return;
+    }
+
+    // create a pointer to the node with target value
+    Node* currentPtr{head};
+    while (currentPtr != nullptr && currentPtr->data != target) {
+        currentPtr = currentPtr->next;
+    }
+
+    // no target value found
+    if (currentPtr == nullptr) {
+        std::cout << "Error Inserting: No target value found.\n";
+        return;
+    }
+
+    // target node is @ end of list
+    if (currentPtr->next == nullptr) {
+        insertAtEnd(head, value);
+        return;
+    }
+
+    // create new node
+    Node* newPtr{new Node()};
+    newPtr->data = value;
+
+    // insert node and link rest of list
+
+    // link node after
+    newPtr->next = currentPtr->next;
+    currentPtr->next->prev = newPtr;
+
+    // link node before
+    currentPtr->next = newPtr;
+    newPtr->prev = currentPtr;
+}
+
+// DELETING FUNCTIONS
+
+void deleteAtBeginning(Node*& head) {
+    // empty list
+    if (head == nullptr) {
+        std::cout << "Error Deleting: Empty list.\n";
+        return;
+    }
+
+    // list has only one node
+    if (head->next == nullptr) {
+        delete head;
+        head = nullptr;
+        return;
+    }
+
+    // delete node @ beginning
+    Node* tempPtr{head};
+    head = head->next;
+    head->prev = nullptr;
+    delete tempPtr;
+}
+
+void deleteAtEnd(Node*& head) {
+    // empty list
+    if (head == nullptr) {
+        std::cout << "Error Deleting: Empty list.\n";
+        return;
+    }
+
+    // list has only one node
+    if (head->next == nullptr) {
+        delete head;
+        head = nullptr;
+        return;
+    }
+
+    // delete node @ end
+    Node* currentPtr{head};
+    // currentPtr points to the last node
+    while (currentPtr->next != nullptr) {
+        currentPtr = currentPtr->next;
+    }
+
+    currentPtr->prev->next = nullptr;
+    delete currentPtr;
+}
+
+void deleteWithValue(Node*& head, int target) {
+    // empty list
+    if (head == nullptr) {
+        std::cout << "Error Deleting: Empty list.\n";
+        return;
+    }
+
+    // target is first node in list
+    if (head->data == target) {
+        deleteAtBeginning(head);
+        return;
+    }
+
+    // currentPtr points to node with target value
+    Node* currentPtr{head};
+    while (currentPtr != nullptr && currentPtr->data != target) {
+        currentPtr = currentPtr->next;
+    }
+
+    // no target value found
+    if (currentPtr == nullptr) {
+        std::cout << "Error Deleting: No target value found.\n";
+        return;
+    }
+
+    // target node is @ end of list
+    if (currentPtr->next == nullptr) {
+        deleteAtEnd(head);
+        return;
+    }
+
+    // delete node and link with rest of list
+    currentPtr->prev->next = currentPtr->next;
+    delete currentPtr;
+}
+
+void deleteList(Node*& head) {
+    // empty list
+    if (head == nullptr) {
+        return;
+    }
+
+    // traverse through the list, deleting every node using a temporary pointer
+    Node* currentPtr{head};
+    while (currentPtr != nullptr) {
+        Node* tempPtr = currentPtr;
+        currentPtr = currentPtr->next;
+        delete tempPtr;
+    }
+
+    // reset original list
+    head = nullptr;
+}
+
+// PRINTING FUNCTIONS
+
+void print(const Node* head) {
+    if (head == nullptr) {
+        std::cout << "[Empty list]";
+    }
+
     while (head != nullptr) {
         std::cout << ' ' << head->data;
         head = head->next;
     }
+
     std::cout << '\n';
 }
 
-void insertAtFront(Node*& head, int value) {
-    Node* newNode{new Node()};
-    newNode->next = head;
-    newNode->data = value;
-    newNode->prev = nullptr;
-    head = newNode;
+void printReverse(const Node* head) {
+    if (head == nullptr) {
+        return;
+    }
+
+    printReverse(head->next);
+    std::cout << ' ' << head->data;
 }
 
-void insertAtBack(Node* head, int value) {
-    Node* newNode{new Node()};
-    while (head->next != nullptr) {
+void printOdd(const Node* head) {
+    if (head == nullptr) {
+        std::cout << "[Empty list]";
+    }
+
+    while (head != nullptr) {
+        if (head->data % 2 != 0) {
+            std::cout << ' ' << head->data;
+        }
+
         head = head->next;
     }
-    newNode->next = nullptr;
-    newNode->data = value;
-    newNode->prev = head;
-    head->next = newNode;
+
+    std::cout << '\n';
 }
 
-int main()
-{
-    Node* one{new Node()};
-    Node* two{new Node()};
-    Node* three{new Node()};
+// MUTATING FUNCTIONS
 
-    Node* head{one};
+void doubleValues(Node* head) {
+    if (head == nullptr) {
+        return;
+    }
 
-    one->prev = nullptr;
-    one->data = 1;
-    one->next = two;
+    // double every node's data value
+    while (head != nullptr) {
+        head->data = head->data * 2;
+        head = head->next;
+    }
+}
 
-    two->prev = one;
-    two->data = 2;
-    two->next = three;
+void swapValuePairs(Node* head) {
+    // empty list or only one node in list
+    if (head == nullptr || head->next == nullptr) {
+        return;
+    }
 
-    three->prev = two;
-    three->data = 3;
-    three->next = nullptr;
+    // swap the data values of each pair of nodes
+    while (head != nullptr && head->next != nullptr) {
+        int temp{head->data};
+        head->data = head->next->data;
+        head->next->data = temp;
 
-    printList(head);
-    insertAtFront(head, 4);
-    printList(head);
-    insertAtBack(head, 5);
-    printList(head);
+        // move pointer safely
+        head = head->next != nullptr && head->next->next != nullptr ? head->next->next : nullptr;
+    }
+}
 
-    delete one;
-    delete two;
-    delete three;
+void removeConsecutiveDuplicates(Node* head) {
+    // empty list or only one node in list
+    if (head == nullptr || head->next == nullptr) {
+        return;
+    }
 
-    return 0;
+    Node* comparePtrA{head};
+    Node* comparePtrB{head->next};
+    while (comparePtrB != nullptr) {
+        if (comparePtrA->data == comparePtrB->data) {
+            // the duplicate is at the end of the list
+            if (comparePtrB->next == nullptr) {
+                deleteAtEnd(head);
+                return;
+            }
+
+            // delete duplicate and link rest of list
+            Node* tempPtr{comparePtrB};
+            comparePtrA->next = comparePtrB->next;
+            comparePtrB->next->prev = comparePtrA;
+            comparePtrB = comparePtrB->next;
+            delete tempPtr;
+        } else {
+            // move pointers safely
+            comparePtrA = comparePtrB;
+            comparePtrB = comparePtrA->next;
+        }
+    }
+}
+
+void removeDuplicates(Node* head) {
+    // empty list or only one node in list
+    if (head == nullptr || head->next == nullptr) {
+        return;
+    }
+
+    Node* comparePtrA{head};
+    while (comparePtrA != nullptr) {
+        Node* comparePtrB{comparePtrA->next};
+        while (comparePtrB != nullptr) {
+            // duplicate found
+            if (comparePtrB->data == comparePtrA->data) {
+                // delete duplicate and link rest of list
+                Node* tempPtr{comparePtrB};
+                comparePtrB->prev->next = comparePtrB->next;
+                if (comparePtrB->next != nullptr) {
+                    comparePtrB->next->prev = comparePtrB->prev;
+                }
+                comparePtrB = comparePtrB->next;
+                delete tempPtr;
+            } else {
+                comparePtrB = comparePtrB->next;
+            }
+        }
+
+        comparePtrA = comparePtrA->next;
+    }
+}
+
+void simpleConcatenate(Node* headA, Node* headB) {
+    // empty lists
+    if (headA == nullptr || headB == nullptr) {
+        return;
+    }
+
+    // move headA to point to the last node in list A
+    while (headA->next != nullptr) {
+        headA = headA->next;
+    }
+
+    // concatenate
+    headA->next = headB;
+    headB->prev = headA;
+}
+
+// LIST OPERATION FUNCTIONS
+
+Node* concatenate(const Node* headA, const Node* headB) {
+    // create a new list
+    Node* head{nullptr};
+
+    // create nodes from list A
+    while (headA != nullptr) {
+        insertAtEnd(head, headA->data);
+        headA = headA->next;
+    }
+
+    // create nodes from list B
+    while (headB != nullptr) {
+        insertAtEnd(head, headB->data);
+        headB = headB->next;
+    }
+
+    return head;
 }
