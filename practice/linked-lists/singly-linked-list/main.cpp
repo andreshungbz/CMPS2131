@@ -32,6 +32,7 @@ void printOdd(Node* head);
 
 void doubleValues(Node* head);
 void swapValuePairs(Node* head);
+void removeConsecutiveDuplicates(Node* head);
 
 int main()
 {
@@ -112,6 +113,22 @@ int main()
     // swapValuePairs
     std::cout << "List after value pair swap:";
     swapValuePairs(listHead);
+    print(listHead);
+
+    // clear list
+    deleteList(listHead);
+    for (int i{1}; i <= 5; ++i) {
+        insertAtEnd(listHead, i);
+        insertAtEnd(listHead, i);
+    }
+    deleteWithValue(listHead, 3);
+    deleteWithValue(listHead, 5);
+    std::cout << "New List:";
+    print(listHead);
+
+    // removeConsecutiveDuplicates
+    std::cout << "List with removed consecutive duplicates:";
+    removeConsecutiveDuplicates(listHead);
     print(listHead);
 
     deleteList(listHead);
@@ -303,6 +320,8 @@ void deleteList(Node*& head) {
     head = nullptr;
 }
 
+// PRINTING FUNCTIONS
+
 void print(Node* head) {
     if (head == nullptr) {
         std::cout << "[Empty list]";
@@ -341,6 +360,8 @@ void printOdd(Node* head) {
     std::cout << '\n';
 }
 
+// MUTATING FUNCTIONS
+
 void doubleValues(Node* head) {
     if (head == nullptr) {
         return;
@@ -367,7 +388,37 @@ void swapValuePairs(Node* head) {
         swapPtrA->data = swapPtrB->data;
         swapPtrB->data = temp;
 
+        // move pointers safely
         swapPtrA = swapPtrB->next;
         swapPtrB = swapPtrA->next != nullptr ? swapPtrA->next : nullptr;
+    }
+}
+
+void removeConsecutiveDuplicates(Node* head) {
+    // empty list or only one node in list
+    if (head == nullptr || head->next == nullptr) {
+        return;
+    }
+
+    Node* comparePtrA{head};
+    Node* comparePtrB{head->next};
+    while (comparePtrB != nullptr) {
+        while (comparePtrA->data == comparePtrB->data) {
+            // the duplicate is at the end of the list
+            if (comparePtrB->next == nullptr) {
+                deleteAtEnd(head);
+                return;
+            }
+
+            // delete duplicate and link rest of list
+            Node* tempPtr{comparePtrB};
+            comparePtrA->next = comparePtrB->next;
+            comparePtrB = comparePtrB->next;
+            delete tempPtr;
+        }
+
+        // move pointers safely
+        comparePtrA = comparePtrB;
+        comparePtrB = comparePtrA->next != nullptr ? comparePtrA->next : nullptr;
     }
 }
