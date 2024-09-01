@@ -36,7 +36,7 @@ void removeConsecutiveDuplicates(Node* head);
 void removeDuplicates(Node* head);
 void simpleConcatenate(Node* headA, Node* headB);
 
-// LIST FUNCTIONS
+// LIST OPERATION FUNCTIONS
 
 Node* concatenate(const Node* headA, const Node* headB);
 
@@ -523,7 +523,7 @@ void simpleConcatenate(Node* headA, Node* headB) {
     headA->next = headB;
 }
 
-// LIST FUNCTIONS
+// LIST OPERATION FUNCTIONS
 
 Node* concatenate(const Node* headA, const Node* headB) {
     // create a new list
