@@ -437,16 +437,13 @@ void swapValuePairs(Node* head) {
     }
 
     // swap the data values of each pair of nodes
-    Node* swapPtrA{head};
-    Node* swapPtrB{head->next};
-    while (swapPtrB != nullptr) {
-        int temp{swapPtrA->data};
-        swapPtrA->data = swapPtrB->data;
-        swapPtrB->data = temp;
+    while (head != nullptr && head->next != nullptr) {
+        int temp{head->data};
+        head->data = head->next->data;
+        head->next->data = temp;
 
-        // move pointers safely
-        swapPtrA = swapPtrB->next;
-        swapPtrB = swapPtrA->next != nullptr ? swapPtrA->next : nullptr;
+        // move pointer safely
+        head = head->next != nullptr && head->next->next != nullptr ? head->next->next : nullptr;
     }
 }
 
