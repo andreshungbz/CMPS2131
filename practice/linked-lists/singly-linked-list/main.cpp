@@ -24,9 +24,9 @@ void deleteList(Node*& head);
 
 // PRINTING FUNCTIONS
 
-void print(Node* head);
-void printReverse(Node* head);
-void printOdd(Node* head);
+void print(const Node* head);
+void printReverse(const Node* head);
+void printOdd(const Node* head);
 
 // MUTATING FUNCTIONS
 
@@ -38,7 +38,7 @@ void simpleConcatenate(Node* headA, Node* headB);
 
 // LIST FUNCTIONS
 
-Node* concatenate(Node* headA, Node* headB);
+Node* concatenate(const Node* headA, const Node* headB);
 
 int main()
 {
@@ -378,7 +378,7 @@ void deleteList(Node*& head) {
 
 // PRINTING FUNCTIONS
 
-void print(Node* head) {
+void print(const Node* head) {
     if (head == nullptr) {
         std::cout << "[Empty list]";
     }
@@ -391,7 +391,7 @@ void print(Node* head) {
     std::cout << '\n';
 }
 
-void printReverse(Node* head) {
+void printReverse(const Node* head) {
     if (head == nullptr) {
         return;
     }
@@ -400,7 +400,7 @@ void printReverse(Node* head) {
     std::cout << ' ' << head->data;
 }
 
-void printOdd(Node* head) {
+void printOdd(const Node* head) {
     if (head == nullptr) {
         std::cout << "[Empty list]";
     }
@@ -525,7 +525,7 @@ void simpleConcatenate(Node* headA, Node* headB) {
 
 // LIST FUNCTIONS
 
-Node* concatenate(Node* headA, Node* headB) {
+Node* concatenate(const Node* headA, const Node* headB) {
     // create a new list
     Node* head{nullptr};
 
