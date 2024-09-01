@@ -415,7 +415,7 @@ void removeConsecutiveDuplicates(Node* head) {
     Node* comparePtrA{head};
     Node* comparePtrB{head->next};
     while (comparePtrB != nullptr) {
-        while (comparePtrA->data == comparePtrB->data) {
+        if (comparePtrA->data == comparePtrB->data) {
             // the duplicate is at the end of the list
             if (comparePtrB->next == nullptr) {
                 deleteAtEnd(head);
@@ -427,11 +427,11 @@ void removeConsecutiveDuplicates(Node* head) {
             comparePtrA->next = comparePtrB->next;
             comparePtrB = comparePtrB->next;
             delete tempPtr;
+        } else {
+            // move pointers safely
+            comparePtrA = comparePtrB;
+            comparePtrB = comparePtrA->next;
         }
-
-        // move pointers safely
-        comparePtrA = comparePtrB;
-        comparePtrB = comparePtrA->next != nullptr ? comparePtrA->next : nullptr;
     }
 }
 
