@@ -33,6 +33,7 @@ void printOdd(Node* head);
 void doubleValues(Node* head);
 void swapValuePairs(Node* head);
 void removeConsecutiveDuplicates(Node* head);
+void removeDuplicates(Node* head);
 
 int main()
 {
@@ -131,8 +132,19 @@ int main()
     removeConsecutiveDuplicates(listHead);
     print(listHead);
 
-    deleteList(listHead);
+    // add duplicates
+    for (int i{1}; i <= 5; ++i) {
+        insertAtBeginning(listHead, i);
+    }
+    std::cout << "List:";
+    print(listHead);
 
+    // removeDuplicates
+    std::cout << "List with removed duplicates:";
+    removeDuplicates(listHead);
+    print(listHead);
+
+    deleteList(listHead);
     return 0;
 }
 
@@ -420,5 +432,34 @@ void removeConsecutiveDuplicates(Node* head) {
         // move pointers safely
         comparePtrA = comparePtrB;
         comparePtrB = comparePtrA->next != nullptr ? comparePtrA->next : nullptr;
+    }
+}
+
+void removeDuplicates(Node* head) {
+    // empty list or only one node in list
+    if (head == nullptr || head->next == nullptr) {
+        return;
+    }
+
+    Node* comparePtrA{head};
+    while (comparePtrA != nullptr) {
+        Node* previousPtr{comparePtrA};
+        Node* comparePtrB{comparePtrA->next};
+        while (comparePtrB != nullptr) {
+            // duplicate found
+            if (comparePtrB->data == comparePtrA->data) {
+                // delete duplicate and link rest of list
+                Node* tempPtr{comparePtrB};
+                previousPtr->next = comparePtrB->next;
+                comparePtrB = comparePtrB->next;
+                delete tempPtr;
+            } else {
+                // move pointers safely
+                previousPtr = comparePtrB;
+                comparePtrB = comparePtrB->next;
+            }
+        }
+
+        comparePtrA = comparePtrA->next;
     }
 }
