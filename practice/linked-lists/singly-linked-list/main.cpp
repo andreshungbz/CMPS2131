@@ -36,6 +36,10 @@ void removeConsecutiveDuplicates(Node* head);
 void removeDuplicates(Node* head);
 void simpleConcatenate(Node* headA, Node* headB);
 
+// LIST FUNCTIONS
+
+Node* concatenate(Node* headA, Node* headB);
+
 int main()
 {
     // list
@@ -158,7 +162,33 @@ int main()
     simpleConcatenate(listHead, listHead2);
     print(listHead);
 
+    // create another list
+    Node* listHeadA{nullptr};
+    for (int i{1}; i <= 5; ++i) {
+        insertAtBeginning(listHeadA, 1);
+    }
+    std::cout << "List A:";
+    print(listHeadA);
+
+    // create another list
+    Node* listHeadB{nullptr};
+    for (int i{1}; i <= 5; ++i) {
+        insertAtBeginning(listHeadB, 2);
+    }
+    std::cout << "List B:";
+    print(listHeadB);
+
+    // non-mutating concatenate
+    std::cout << "List C (new):";
+    Node* listHeadC{concatenate(listHeadA, listHeadB)};
+    print(listHeadC);
+
+    // clear memory allocation
     deleteList(listHead);
+    deleteList(listHeadA);
+    deleteList(listHeadB);
+    deleteList(listHeadC);
+
     return 0;
 }
 
@@ -491,4 +521,25 @@ void simpleConcatenate(Node* headA, Node* headB) {
 
     // concatenate
     headA->next = headB;
+}
+
+// LIST FUNCTIONS
+
+Node* concatenate(Node* headA, Node* headB) {
+    // create a new list
+    Node* head{nullptr};
+
+    // create nodes from list A
+    while (headA != nullptr) {
+        insertAtEnd(head, headA->data);
+        headA = headA->next;
+    }
+
+    // create nodes from list B
+    while (headB != nullptr) {
+        insertAtEnd(head, headB->data);
+        headB = headB->next;
+    }
+
+    return head;
 }
