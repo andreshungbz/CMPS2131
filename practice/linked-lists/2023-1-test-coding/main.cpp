@@ -130,7 +130,7 @@ bool isCircular(Node* head) {
     Node* firstPtr{head};
     Node* currentPtr{head};
     while (true) {
-        if (currentPtr == nullptr) {
+        if (currentPtr->next == nullptr) {
             return false;
         }
 
