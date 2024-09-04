@@ -11,7 +11,7 @@ public:
 // basic functions
 void insertAtEnd(Node*& head, char value);
 void deleteList(Node*& head);
-void printList(Node* head);
+void printList(const Node* head);
 // functions for question
 bool isPalindrome(Node* head);
 bool isCircular(Node* head);
