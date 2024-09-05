@@ -35,6 +35,7 @@ void swapValuePairs(Node* head);
 void removeConsecutiveDuplicates(Node* head);
 void removeDuplicates(Node* head);
 void simpleConcatenate(Node* headA, Node* headB);
+void reverse(Node* head);
 
 // LIST OPERATION FUNCTIONS
 
@@ -181,6 +182,17 @@ int main()
     // non-mutating concatenate
     std::cout << "List C (new):";
     Node* listHeadC{concatenate(listHeadA, listHeadB)};
+    print(listHeadC);
+
+    // reverse
+    deleteList(listHeadC);
+    for (int i{1}; i <= 10; ++i) {
+        insertAtEnd(listHeadC, i);
+    }
+    std::cout << "List:";
+    print(listHeadC);
+    std::cout << "Reverse list mutated:";
+    reverse(listHeadC);
     print(listHeadC);
 
     // clear memory allocation
@@ -518,6 +530,39 @@ void simpleConcatenate(Node* headA, Node* headB) {
 
     // concatenate
     headA->next = headB;
+}
+
+void reverse(Node* head) {
+    // empty list or list with one node
+    if (head == nullptr || head->next == nullptr) {
+        return;
+    }
+
+    // get number of nodes
+    int length{0};
+    Node* checkPtr{head};
+    while (checkPtr != nullptr) {
+        checkPtr = checkPtr->next;
+        ++length;
+    }
+
+    int traversals{length - 1};
+    int counter{length / 2};
+    for (int i{0}; i < counter; ++i, --traversals) {
+        Node* swapPtrA{head};
+        for (int j{0}; j < i; ++j) {
+            swapPtrA = swapPtrA->next;
+        }
+
+        Node* swapPtrB{head};
+        for (int j{0}; j < traversals; ++j) {
+            swapPtrB = swapPtrB->next;
+        }
+
+        int temp{swapPtrA->data};
+        swapPtrA->data = swapPtrB->data;
+        swapPtrB->data = temp;
+    }
 }
 
 // LIST OPERATION FUNCTIONS
