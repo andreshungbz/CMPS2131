@@ -100,7 +100,7 @@ int main()
     print(listHead);
 
     // deleteWithValue
-    std::cout << "Delete first node with value 3:";
+    std::cout << "Delete first node with value 2:";
     deleteWithValue(listHead, 2);
     print(listHead);
 
