@@ -28,6 +28,7 @@ void reverseList(Node*& head) {
         currentPtr = nextPtr;
     }
 
+    // reassign head
     head = previousPtr;
 }
 
