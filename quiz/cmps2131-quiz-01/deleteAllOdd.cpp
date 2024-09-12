@@ -11,6 +11,7 @@ public:
 void print(const Node* head);
 void insertAtEnd(Node*& head, int value);
 void deleteList(Node*& head);
+
 void deleteAllOdd(Node*& head);
 
 int main() {

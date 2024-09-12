@@ -7,30 +7,12 @@ public:
     Node* next;
 };
 
+// helper functions
 void printList(const Node* head);
 void deleteList(Node*& head);
 void insertAtEnd(Node*& head, int value);
 
-void reverseList(Node*& head) {
-    // empty list or list with one item
-    if (head == nullptr || head->next == nullptr) {
-        return;
-    }
-
-    Node* previousPtr{nullptr};
-    Node* currentPtr{head};
-    Node* nextPtr{nullptr};
-
-    while (currentPtr != nullptr) {
-        nextPtr = currentPtr->next;
-        currentPtr->next = previousPtr;
-        previousPtr = currentPtr;
-        currentPtr = nextPtr;
-    }
-
-    // reassign head
-    head = previousPtr;
-}
+void reverseList(Node*& head);
 
 int main() {
     Node* listHead{nullptr};
@@ -100,4 +82,25 @@ void insertAtEnd(Node*& head, int value) {
 
     // insert node at the end
     currentPtr->next = newPtr;
+}
+
+void reverseList(Node*& head) {
+    // empty list or list with one item
+    if (head == nullptr || head->next == nullptr) {
+        return;
+    }
+
+    Node* previousPtr{nullptr};
+    Node* currentPtr{head};
+    Node* nextPtr{nullptr};
+
+    while (currentPtr != nullptr) {
+        nextPtr = currentPtr->next;
+        currentPtr->next = previousPtr;
+        previousPtr = currentPtr;
+        currentPtr = nextPtr;
+    }
+
+    // reassign head
+    head = previousPtr;
 }
