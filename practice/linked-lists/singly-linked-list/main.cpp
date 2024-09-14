@@ -42,13 +42,15 @@ Node* deepCopy(const Node* head);
 int main()
 {
     Node* listHead{nullptr};
-    for (int i{1}; i <= 5; ++i) {
+    for (int i{1}; i <= 3; ++i) {
+        insertAtEnd(listHead, i);
         insertAtEnd(listHead, i);
     }
+    deleteWithValue(listHead, 2);
     std::cout << "List:";
     printList(listHead);
 
-    swapValuePairs(listHead);
+    removeConsecutiveDuplicates(listHead);
     std::cout << "List:";
     printList(listHead);
 
@@ -327,7 +329,8 @@ void removeConsecutiveDuplicates(Node* head) {
         if (comparePtrA->data == comparePtrB->data) {
             // the duplicate is at the end of the list
             if (comparePtrB->next == nullptr) {
-                deleteAtEnd(head);
+                comparePtrA->next = nullptr;
+                delete comparePtrB;
                 return;
             }
 
