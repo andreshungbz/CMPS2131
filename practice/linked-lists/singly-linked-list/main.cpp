@@ -35,7 +35,7 @@ void swapValuePairs(Node* head);
 void removeConsecutiveDuplicates(Node* head);
 void removeDuplicates(Node* head);
 void simpleConcatenate(Node* headA, Node* headB);
-void reverse(Node* head);
+void reverse(Node*& head);
 
 // LIST OPERATION FUNCTIONS
 
@@ -533,37 +533,25 @@ void simpleConcatenate(Node* headA, Node* headB) {
     headA->next = headB;
 }
 
-void reverse(Node* head) {
-    // empty list or list with one node
+void reverse(Node*& head) {
+    // empty list or list with one item
     if (head == nullptr || head->next == nullptr) {
         return;
     }
 
-    // get number of nodes
-    int length{0};
-    Node* checkPtr{head};
-    while (checkPtr != nullptr) {
-        checkPtr = checkPtr->next;
-        ++length;
+    Node* previousPtr{nullptr};
+    Node* currentPtr{head};
+    Node* nextPtr{nullptr};
+
+    while (currentPtr != nullptr) {
+        nextPtr = currentPtr->next;
+        currentPtr->next = previousPtr;
+        previousPtr = currentPtr;
+        currentPtr = nextPtr;
     }
 
-    int traversals{length - 1};
-    int counter{length / 2};
-    for (int i{0}; i < counter; ++i, --traversals) {
-        Node* swapPtrA{head};
-        for (int j{0}; j < i; ++j) {
-            swapPtrA = swapPtrA->next;
-        }
-
-        Node* swapPtrB{head};
-        for (int j{0}; j < traversals; ++j) {
-            swapPtrB = swapPtrB->next;
-        }
-
-        int temp{swapPtrA->data};
-        swapPtrA->data = swapPtrB->data;
-        swapPtrB->data = temp;
-    }
+    // reassign head
+    head = previousPtr;
 }
 
 // LIST OPERATION FUNCTIONS
