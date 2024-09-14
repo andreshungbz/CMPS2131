@@ -21,7 +21,7 @@ void insertAfterValue(Node*& head, int target, int value); // only after first i
 // DELETING FUNCTIONS
 void deleteAtBeginning(Node*& head);
 void deleteAtEnd(Node*& head);
-void deleteWithValue(Node*& head, int target);
+void deleteWithValue(Node*& head, int target); // only first instance of target
 
 // PRINTING FUNCTIONS
 void printReverse(const Node* head);
@@ -48,7 +48,7 @@ int main()
     std::cout << "List:";
     print(listHead);
 
-    deleteAtEnd(listHead);
+    deleteWithValue(listHead, 5);
     std::cout << "List:";
     print(listHead);
 
@@ -209,18 +209,18 @@ void deleteAtEnd(Node*& head) {
 void deleteWithValue(Node*& head, int target) {
     // empty list
     if (head == nullptr) {
-        std::cout << "Error Deleting: Empty list.\n";
+        std::cout << "Error: Empty list.\n";
         return;
     }
 
     // target is first node in list
     if (head->data == target) {
-        deleteAtBeginning(head);
+        Node* tempPtr{head};
+        head = head->next;
+        delete tempPtr;
         return;
     }
 
-    // currentPtr points to node with target value
-    // previousPtr points to node before currentPtr
     Node* previousPtr{head};
     Node* currentPtr{head};
     while (currentPtr != nullptr && currentPtr->data != target) {
@@ -230,17 +230,26 @@ void deleteWithValue(Node*& head, int target) {
 
     // no target value found
     if (currentPtr == nullptr) {
-        std::cout << "Error Deleting: No target value found.\n";
+        std::cout << "Error : Target not found.\n";
         return;
     }
 
     // target node is @ end of list
     if (currentPtr->next == nullptr) {
-        deleteAtEnd(head);
+        // list has only one node
+        if (currentPtr == previousPtr) {
+            delete currentPtr;
+            head = nullptr;
+            return;
+        }
+
+        // delete node @ end
+        previousPtr->next = nullptr;
+        delete currentPtr;
         return;
     }
 
-    // delete node and link with rest of list
+    // there are nodes after target node that need to be linked
     previousPtr->next = currentPtr->next;
     delete currentPtr;
 }
