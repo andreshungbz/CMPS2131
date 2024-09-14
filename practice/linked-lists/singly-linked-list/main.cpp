@@ -47,7 +47,7 @@ int main()
     Node* listHead{nullptr};
 
     for (int i{1}; i <= 5; ++i) {
-        insertAtBeginning(listHead, i);
+        insertAtEnd(listHead, i);
     }
     std::cout << "List:";
     print(listHead);
