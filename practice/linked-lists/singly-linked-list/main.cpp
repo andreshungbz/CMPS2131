@@ -57,15 +57,16 @@ int main()
 // BASIC FUNCTIONS
 
 void print(const Node* head) {
+    // empty list
     if (head == nullptr) {
-        std::cout << "[Empty list]";
+        std::cout << "[empty]\n";
+        return;
     }
 
     while (head != nullptr) {
         std::cout << ' ' << head->data;
         head = head->next;
     }
-
     std::cout << '\n';
 }
 
