@@ -14,13 +14,11 @@ void print(const Node* head);
 void deleteList(Node*& head);
 
 // INSERTING FUNCTIONS
-
 void insertAtBeginning(Node*& head, int value);
 void insertAtEnd(Node*& head, int value);
 void insertAfterValue(Node*& head, int target, int value);
 
 // DELETING FUNCTIONS
-
 void deleteAtBeginning(Node*& head);
 void deleteAtEnd(Node*& head);
 void deleteWithValue(Node*& head, int target);
@@ -30,7 +28,6 @@ void printReverse(const Node* head);
 void printOdd(const Node* head);
 
 // MUTATING FUNCTIONS
-
 void doubleValues(Node* head);
 void swapValuePairs(Node* head);
 void removeConsecutiveDuplicates(Node* head);
@@ -39,7 +36,6 @@ void simpleConcatenate(Node* headA, Node* headB);
 void reverse(Node*& head);
 
 // LIST OPERATION FUNCTIONS
-
 Node* concatenate(const Node* headA, const Node* headB);
 Node* deepCopy(const Node* head);
 
