@@ -200,6 +200,7 @@ void deleteAtEnd(Node*& head) {
         currentPtr = currentPtr->next;
     }
 
+    // delete node @ end
     Node* tempPtr{currentPtr->next};
     currentPtr->next = nullptr;
     delete tempPtr;
