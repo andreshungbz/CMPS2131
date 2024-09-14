@@ -62,7 +62,7 @@ int main()
 void print(const Node* head) {
     // empty list
     if (head == nullptr) {
-        std::cout << "[empty]\n";
+        std::cout << " [empty]\n";
         return;
     }
 
