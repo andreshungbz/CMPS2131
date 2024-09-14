@@ -41,6 +41,7 @@ void reverse(Node* head);
 // LIST OPERATION FUNCTIONS
 
 Node* concatenate(const Node* headA, const Node* headB);
+Node* deepCopy(const Node* head);
 
 int main()
 {
@@ -582,4 +583,15 @@ Node* concatenate(const Node* headA, const Node* headB) {
     }
 
     return head;
+}
+
+Node* deepCopy(const Node* head) {
+    Node* newHead{nullptr};
+
+    while (head != nullptr) {
+        insertAtEnd(newHead, head->data);
+        head = head->next;
+    }
+
+    return newHead;
 }
