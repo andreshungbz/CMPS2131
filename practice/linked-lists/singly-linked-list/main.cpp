@@ -98,18 +98,18 @@ void insertAtBeginning(Node*& head, int value) {
 }
 
 void insertAtEnd(Node*& head, int value) {
-    // empty list
-    if (head == nullptr) {
-        insertAtBeginning(head, value);
-        return;
-    }
-
     // create new node
     Node* newPtr{new Node()};
     newPtr->data = value;
     newPtr->next = nullptr;
 
-    // create a pointer to the last node
+    // empty list - essentially insert at beginning
+    if (head == nullptr) {
+        head = newPtr;
+        return;
+    }
+
+    // traverse a pointer to the last node
     Node* currentPtr{head};
     while (currentPtr->next != nullptr) {
         currentPtr = currentPtr->next;
