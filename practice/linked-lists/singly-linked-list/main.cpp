@@ -16,7 +16,7 @@ void deleteList(Node*& head);
 // INSERTING FUNCTIONS
 void insertAtBeginning(Node*& head, int value);
 void insertAtEnd(Node*& head, int value);
-void insertAfterValue(Node*& head, int target, int value);
+void insertAfterValue(Node*& head, int target, int value); // only after first instance of target
 
 // DELETING FUNCTIONS
 void deleteAtBeginning(Node*& head);
@@ -46,6 +46,10 @@ int main()
     for (int i{1}; i <= 5; ++i) {
         insertAtEnd(listHead, i);
     }
+    std::cout << "List:";
+    print(listHead);
+
+    insertAfterValue(listHead, 3, 9);
     std::cout << "List:";
     print(listHead);
 
@@ -120,9 +124,14 @@ void insertAtEnd(Node*& head, int value) {
 }
 
 void insertAfterValue(Node*& head, int target, int value) {
+    // create new node
+    Node* newPtr{new Node()};
+    newPtr->data = value;
+    newPtr->next = nullptr;
+
     // empty list
     if (head == nullptr) {
-        std::cout << "Error Inserting: No target value found.\n";
+        std::cout << "Error: Target not found.\n";
         return;
     }
 
@@ -134,22 +143,17 @@ void insertAfterValue(Node*& head, int target, int value) {
 
     // no target value found
     if (currentPtr == nullptr) {
-        std::cout << "Error Inserting: No target value found.\n";
+        std::cout << "Error: Target not found.\n";
         return;
     }
 
     // target node is @ end of list
     if (currentPtr->next == nullptr) {
-        insertAtEnd(head, value);
+        currentPtr->next = newPtr;
         return;
     }
 
-    // create new node
-    Node* newPtr{new Node()};
-    newPtr->data = value;
-    newPtr->next = nullptr;
-
-    // insert node and link rest of list
+    // there are nodes after target node that need to be linked
     newPtr->next = currentPtr->next;
     currentPtr->next = newPtr;
 }
