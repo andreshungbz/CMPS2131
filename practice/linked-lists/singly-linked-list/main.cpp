@@ -42,14 +42,13 @@ Node* deepCopy(const Node* head);
 int main()
 {
     Node* listHead{nullptr};
-
     for (int i{1}; i <= 5; ++i) {
         insertAtEnd(listHead, i);
     }
     std::cout << "List:";
     print(listHead);
 
-    insertAfterValue(listHead, 3, 9);
+    deleteAtEnd(listHead);
     std::cout << "List:";
     print(listHead);
 
@@ -183,7 +182,7 @@ void deleteAtBeginning(Node*& head) {
 void deleteAtEnd(Node*& head) {
     // empty list
     if (head == nullptr) {
-        std::cout << "Error Deleting: Empty list.\n";
+        std::cout << "Error: List is empty.\n";
         return;
     }
 
@@ -194,19 +193,16 @@ void deleteAtEnd(Node*& head) {
         return;
     }
 
-    // delete node @ end
-    Node* previousPtr{head};
+    // logic for list with >1 node
+    // traverse pointer to second-to-last node
     Node* currentPtr{head};
-
-    // currentPtr points to the last node
-    // previousPtr points to the second-to-last node
-    while (currentPtr->next != nullptr) {
-        previousPtr = currentPtr;
+    while (currentPtr->next->next != nullptr) {
         currentPtr = currentPtr->next;
     }
 
-    previousPtr->next = nullptr;
-    delete currentPtr;
+    Node* tempPtr{currentPtr->next};
+    currentPtr->next = nullptr;
+    delete tempPtr;
 }
 
 void deleteWithValue(Node*& head, int target) {
