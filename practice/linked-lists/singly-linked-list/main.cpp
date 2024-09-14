@@ -9,6 +9,10 @@ public:
     Node* next;
 };
 
+// BASIC FUNCTIONS
+void print(const Node* head);
+void deleteList(Node*& head);
+
 // INSERTING FUNCTIONS
 
 void insertAtBeginning(Node*& head, int value);
@@ -20,11 +24,8 @@ void insertAfterValue(Node*& head, int target, int value);
 void deleteAtBeginning(Node*& head);
 void deleteAtEnd(Node*& head);
 void deleteWithValue(Node*& head, int target);
-void deleteList(Node*& head);
 
 // PRINTING FUNCTIONS
-
-void print(const Node* head);
 void printReverse(const Node* head);
 void printOdd(const Node* head);
 
@@ -55,6 +56,29 @@ int main()
     deleteList(listHead);
 
     return 0;
+}
+
+// BASIC FUNCTIONS
+
+void print(const Node* head) {
+    if (head == nullptr) {
+        std::cout << "[Empty list]";
+    }
+
+    while (head != nullptr) {
+        std::cout << ' ' << head->data;
+        head = head->next;
+    }
+
+    std::cout << '\n';
+}
+
+void deleteList(Node*& head) {
+    while (head != nullptr) {
+        Node* tempPtr = head;
+        head = head->next;
+        delete tempPtr;
+    }
 }
 
 // INSERTING FUNCTIONS
@@ -223,38 +247,7 @@ void deleteWithValue(Node*& head, int target) {
     delete currentPtr;
 }
 
-void deleteList(Node*& head) {
-    // empty list
-    if (head == nullptr) {
-        return;
-    }
-
-    // traverse through the list, deleting every node using a temporary pointer
-    Node* currentPtr{head};
-    while (currentPtr != nullptr) {
-        Node* tempPtr = currentPtr;
-        currentPtr = currentPtr->next;
-        delete tempPtr;
-    }
-
-    // reset original list
-    head = nullptr;
-}
-
 // PRINTING FUNCTIONS
-
-void print(const Node* head) {
-    if (head == nullptr) {
-        std::cout << "[Empty list]";
-    }
-
-    while (head != nullptr) {
-        std::cout << ' ' << head->data;
-        head = head->next;
-    }
-
-    std::cout << '\n';
-}
 
 void printReverse(const Node* head) {
     if (head == nullptr) {
