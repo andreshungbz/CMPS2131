@@ -10,7 +10,7 @@ public:
 };
 
 // BASIC FUNCTIONS
-void print(const Node* head);
+void printList(const Node* head);
 void deleteList(Node*& head);
 
 // INSERTING FUNCTIONS
@@ -46,11 +46,11 @@ int main()
         insertAtEnd(listHead, i);
     }
     std::cout << "List:";
-    print(listHead);
+    printList(listHead);
 
     deleteWithValue(listHead, 5);
     std::cout << "List:";
-    print(listHead);
+    printList(listHead);
 
     deleteList(listHead);
 
@@ -59,7 +59,7 @@ int main()
 
 // BASIC FUNCTIONS
 
-void print(const Node* head) {
+void printList(const Node* head) {
     // empty list
     if (head == nullptr) {
         std::cout << " [empty]\n";
