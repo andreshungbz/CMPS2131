@@ -518,21 +518,21 @@ void removeOdd(Node*& head) {
 
 Node* concatenate(const Node* headA, const Node* headB) {
     // create a new list
-    Node* head{nullptr};
+    Node* newHead{nullptr};
 
     // create nodes from list A
     while (headA != nullptr) {
-        insertAtEnd(head, headA->data);
+        insertAtEnd(newHead, headA->data);
         headA = headA->next;
     }
 
     // create nodes from list B
     while (headB != nullptr) {
-        insertAtEnd(head, headB->data);
+        insertAtEnd(newHead, headB->data);
         headB = headB->next;
     }
 
-    return head;
+    return newHead;
 }
 
 Node* deepCopy(const Node* head) {
