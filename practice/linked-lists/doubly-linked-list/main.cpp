@@ -267,7 +267,8 @@ void printReverse(const Node* head) {
 
 void printOdd(const Node* head) {
     if (head == nullptr) {
-        std::cout << "[Empty list]";
+        std::cout << "[empty]\n";
+        return;
     }
 
     while (head != nullptr) {
