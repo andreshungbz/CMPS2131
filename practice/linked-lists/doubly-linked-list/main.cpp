@@ -49,7 +49,7 @@ int main()
     std::cout << "List:";
     printList(listHead);
 
-    deleteWithValue(listHead, 4);
+    swapValuePairs(listHead);
     std::cout << "List:";
     printList(listHead);
 
@@ -303,13 +303,16 @@ void swapValuePairs(Node* head) {
     }
 
     // swap the data values of each pair of nodes
-    while (head != nullptr && head->next != nullptr) {
-        int temp{head->data};
-        head->data = head->next->data;
-        head->next->data = temp;
+    Node* swapPtrA{head};
+    Node* swapPtrB{head->next};
+    while (swapPtrA != nullptr && swapPtrB != nullptr) {
+        int temp{swapPtrA->data};
+        swapPtrA->data = swapPtrB->data;
+        swapPtrB->data = temp;
 
         // move pointer safely
-        head = head->next != nullptr && head->next->next != nullptr ? head->next->next : nullptr;
+        swapPtrA = swapPtrB->next;
+        swapPtrB = swapPtrA != nullptr ? swapPtrA->next : nullptr;
     }
 }
 
