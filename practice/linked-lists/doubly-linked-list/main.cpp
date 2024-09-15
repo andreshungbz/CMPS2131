@@ -172,7 +172,7 @@ void insertAfterValue(Node*& head, int target, int value) {
 void deleteAtBeginning(Node*& head) {
     // empty list
     if (head == nullptr) {
-        std::cout << "Error Deleting: Empty list.\n";
+        std::cout << "Error: Empty list.\n";
         return;
     }
 
