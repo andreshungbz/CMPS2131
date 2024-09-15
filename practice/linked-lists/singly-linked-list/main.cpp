@@ -35,7 +35,7 @@ void swapValuePairs(Node* head);
 void removeConsecutiveDuplicates(Node* head);
 void removeDuplicates(Node* head);
 void simpleConcatenate(Node* headA, Node* headB);
-void reverse(Node*& head);
+void reverseList(Node*& head);
 
 // LIST OPERATION FUNCTIONS
 Node* concatenate(const Node* headA, const Node* headB);
@@ -464,7 +464,7 @@ void simpleConcatenate(Node* headA, Node* headB) {
     headA->next = headB;
 }
 
-void reverse(Node*& head) {
+void reverseList(Node*& head) {
     // empty list or list with one item
     if (head == nullptr || head->next == nullptr) {
         return;
