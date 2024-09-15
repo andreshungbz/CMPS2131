@@ -193,7 +193,7 @@ void deleteAtBeginning(Node*& head) {
 void deleteAtEnd(Node*& head) {
     // empty list
     if (head == nullptr) {
-        std::cout << "Error Deleting: Empty list.\n";
+        std::cout << "Error: Empty list.\n";
         return;
     }
 
@@ -204,9 +204,8 @@ void deleteAtEnd(Node*& head) {
         return;
     }
 
-    // delete node @ end
-    Node* currentPtr{head};
     // currentPtr points to the last node
+    Node* currentPtr{head};
     while (currentPtr->next != nullptr) {
         currentPtr = currentPtr->next;
     }
