@@ -56,8 +56,10 @@ int main()
 // BASIC FUNCTIONS
 
 void printList(const Node* head) {
+    // empty list
     if (head == nullptr) {
-        std::cout << "[Empty list]";
+        std::cout << "[empty]\n";
+        return;
     }
 
     while (head != nullptr) {
