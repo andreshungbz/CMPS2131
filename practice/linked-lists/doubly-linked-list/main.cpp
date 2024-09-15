@@ -10,27 +10,25 @@ public:
     Node* next;
 };
 
-// INSERTING FUNCTIONS
+// BASIC FUNCTIONS
+void printList(const Node* head);
+void deleteList(Node*& head);
 
+// INSERTING FUNCTIONS
 void insertAtBeginning(Node*& head, int value);
 void insertAtEnd(Node*& head, int value);
 void insertAfterValue(Node*& head, int target, int value);
 
 // DELETING FUNCTIONS
-
 void deleteAtBeginning(Node*& head);
 void deleteAtEnd(Node*& head);
 void deleteWithValue(Node*& head, int target);
-void deleteList(Node*& head);
 
 // PRINTING FUNCTIONS
-
-void print(const Node* head);
 void printReverse(const Node* head);
 void printOdd(const Node* head);
 
 // MUTATING FUNCTIONS
-
 void doubleValues(Node* head);
 void swapValuePairs(Node* head);
 void removeConsecutiveDuplicates(Node* head);
@@ -39,171 +37,53 @@ void simpleConcatenate(Node* headA, Node* headB);
 void reverse(Node* head);
 
 // LIST OPERATION FUNCTIONS
-
 Node* concatenate(const Node* headA, const Node* headB);
 Node* deepCopy(const Node* head);
 
 int main()
 {
-    // list
     Node* listHead{nullptr};
-
-    // insertAtBeginning
-    for (int i{1}; i <= 5; ++i) {
-        insertAtBeginning(listHead, i);
-    }
-    std::cout << "insertAtBeginning:";
-    print(listHead);
-
-    // insertAtEnd
     for (int i{1}; i <= 5; ++i) {
         insertAtEnd(listHead, i);
-    }
-    std::cout << "insertAtEnd:";
-    print(listHead);
-
-    // insertAfterValue
-
-    insertAfterValue(listHead, 3, 9);
-    std::cout << "Insert 9 after node w/ value 3:";
-    print(listHead);
-
-    std::cout << "Insert 9 after node w/ value 10: ";
-    insertAfterValue(listHead, 10, 9);
-
-    deleteList(listHead);
-    std::cout << "Cleared List: ";
-    print(listHead);
-
-    std::cout << "Insert 9 after node w/ value 10: ";
-    insertAfterValue(listHead, 10, 9);
-
-    // printReverse
-    for (int i{1}; i <= 5; ++i) {
-        insertAtEnd(listHead, i);
-    }
-    std::cout << "Initial List:";
-    print(listHead);
-    std::cout << "List printed in reverse:";
-    printReverse(listHead);
-
-    // printOdd
-    std::cout << "\nOdd numbers:";
-    printOdd(listHead);
-
-    // deleteAtBeginning
-    std::cout << "deleteAtBeginning:";
-    deleteAtBeginning(listHead);
-    print(listHead);
-
-    // deleteAtEnd
-    std::cout << "deleteAtEnd:";
-    deleteAtEnd(listHead);
-    print(listHead);
-
-    // deleteWithValue
-    std::cout << "Delete first node with value 2:";
-    deleteWithValue(listHead, 2);
-    print(listHead);
-
-    // doubleValues
-    std::cout << "Double every value:";
-    doubleValues(listHead);
-    print(listHead);
-
-    // clear list
-    deleteList(listHead);
-    for (int i{1}; i <= 5; ++i) {
-        insertAtEnd(listHead, i);
-    }
-    std::cout << "New List:";
-    print(listHead);
-
-    // swapValuePairs
-    std::cout << "List after value pair swap:";
-    swapValuePairs(listHead);
-    print(listHead);
-
-    // clear list
-    deleteList(listHead);
-    for (int i{1}; i <= 5; ++i) {
-        insertAtEnd(listHead, i);
-        insertAtEnd(listHead, i);
-    }
-    deleteWithValue(listHead, 3);
-    deleteWithValue(listHead, 5);
-    std::cout << "New List:";
-    print(listHead);
-
-    // removeConsecutiveDuplicates
-    std::cout << "List with removed consecutive duplicates:";
-    removeConsecutiveDuplicates(listHead);
-    print(listHead);
-
-    // add duplicates
-    for (int i{1}; i <= 5; ++i) {
-        insertAtBeginning(listHead, i);
     }
     std::cout << "List:";
-    print(listHead);
+    printList(listHead);
 
-    // removeDuplicates
-    std::cout << "List with removed duplicates:";
-    removeDuplicates(listHead);
-    print(listHead);
-
-    // create another list
-    Node* listHead2{nullptr};
-    for (int i{1}; i <= 5; ++i) {
-        insertAtBeginning(listHead2, 5);
-    }
-    std::cout << "Another list:";
-    print(listHead2);
-
-    // concatenate
-    std::cout << "Concatenated list:";
-    simpleConcatenate(listHead, listHead2);
-    print(listHead);
-
-    // create another list
-    Node* listHeadA{nullptr};
-    for (int i{1}; i <= 5; ++i) {
-        insertAtBeginning(listHeadA, 1);
-    }
-    std::cout << "List A:";
-    print(listHeadA);
-
-    // create another list
-    Node* listHeadB{nullptr};
-    for (int i{1}; i <= 5; ++i) {
-        insertAtBeginning(listHeadB, 2);
-    }
-    std::cout << "List B:";
-    print(listHeadB);
-
-    // non-mutating concatenate
-    std::cout << "List C (new):";
-    Node* listHeadC{concatenate(listHeadA, listHeadB)};
-    print(listHeadC);
-
-    // reverse
-    deleteList(listHeadC);
-    for (int i{1}; i <= 10; ++i) {
-        insertAtEnd(listHeadC, i);
-    }
-    std::cout << "List:";
-    print(listHeadC);
-    std::cout << "Reverse list mutated:";
-    reverse(listHeadC);
-    print(listHeadC);
-
-    // clear memory allocation
     deleteList(listHead);
-    deleteList(listHeadA);
-    deleteList(listHeadB);
-    deleteList(listHeadC);
-
     return 0;
+}
+
+// BASIC FUNCTIONS
+
+void printList(const Node* head) {
+    if (head == nullptr) {
+        std::cout << "[Empty list]";
+    }
+
+    while (head != nullptr) {
+        std::cout << ' ' << head->data;
+        head = head->next;
+    }
+
+    std::cout << '\n';
+}
+
+void deleteList(Node*& head) {
+    // empty list
+    if (head == nullptr) {
+        return;
+    }
+
+    // traverse through the list, deleting every node using a temporary pointer
+    Node* currentPtr{head};
+    while (currentPtr != nullptr) {
+        Node* tempPtr = currentPtr;
+        currentPtr = currentPtr->next;
+        delete tempPtr;
+    }
+
+    // reset original list
+    head = nullptr;
 }
 
 // INSERTING FUNCTIONS
@@ -374,38 +254,7 @@ void deleteWithValue(Node*& head, int target) {
     delete currentPtr;
 }
 
-void deleteList(Node*& head) {
-    // empty list
-    if (head == nullptr) {
-        return;
-    }
-
-    // traverse through the list, deleting every node using a temporary pointer
-    Node* currentPtr{head};
-    while (currentPtr != nullptr) {
-        Node* tempPtr = currentPtr;
-        currentPtr = currentPtr->next;
-        delete tempPtr;
-    }
-
-    // reset original list
-    head = nullptr;
-}
-
 // PRINTING FUNCTIONS
-
-void print(const Node* head) {
-    if (head == nullptr) {
-        std::cout << "[Empty list]";
-    }
-
-    while (head != nullptr) {
-        std::cout << ' ' << head->data;
-        head = head->next;
-    }
-
-    std::cout << '\n';
-}
 
 void printReverse(const Node* head) {
     if (head == nullptr) {
