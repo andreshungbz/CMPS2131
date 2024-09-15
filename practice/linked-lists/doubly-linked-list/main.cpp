@@ -18,6 +18,7 @@ void deleteList(Node*& head);
 void insertAtBeginning(Node*& head, int value);
 void insertAtEnd(Node*& head, int value);
 void insertAfterValue(Node*& head, int target, int value);
+void insertAtPosition(Node*& head, int position, int value);
 
 // DELETING FUNCTIONS
 void deleteAtBeginning(Node*& head);
@@ -46,19 +47,14 @@ int main()
     for (int i{1}; i <= 5; ++i) {
         insertAtEnd(listHead, i);
     }
-    Node* listHead2{deepCopy(listHead)};
-    std::cout << "List1:";
+    std::cout << "List:";
     printList(listHead);
-    std::cout << "List2:";
-    printList(listHead2);
 
-    Node* listHead3{concatenate(listHead, listHead2)};
-    std::cout << "List3:";
-    printList(listHead3);
+    insertAtPosition(listHead, 45, 9);
+    std::cout << "List:";
+    printList(listHead);
 
     deleteList(listHead);
-    deleteList(listHead2);
-    deleteList(listHead3);
 
     return 0;
 }
@@ -171,6 +167,52 @@ void insertAfterValue(Node*& head, int target, int value) {
     // link node that goes before new node
     currentPtr->next = newPtr;
     newPtr->prev = currentPtr;
+}
+
+void insertAtPosition(Node*& head, int position, int value) {
+    // create new node
+    Node* newPtr{new Node()};
+    newPtr->prev = nullptr;
+    newPtr->data = value;
+    newPtr->next = nullptr;
+
+    // empty list
+    if (head == nullptr) {
+        head = newPtr;
+        return;
+    }
+
+    // insert @ beginning
+    if (position <= 1) {
+        newPtr->next = head;
+        head->prev = newPtr;
+        head = newPtr;
+        return;
+    }
+
+    // e.g. for position 2 you need to go to the 1st node or 0 traversals
+    int traversals{position - 2};
+    Node* currentPtr{head};
+    for (int i{0}; i < traversals; ++i) {
+        // keep pointer at last node if traversals overflow list
+        if (currentPtr->next != nullptr) {
+            currentPtr = currentPtr->next;
+        }
+    }
+
+    // insert @ end
+    if (currentPtr->next == nullptr) {
+        currentPtr->next = newPtr;
+        newPtr->prev = currentPtr;
+        return;
+    }
+
+    // link node that goes after new node
+    newPtr->next = currentPtr->next;
+    currentPtr->next->prev = newPtr;
+    // link node that goes before new node
+    newPtr->prev = currentPtr;
+    currentPtr->next = newPtr;
 }
 
 // DELETING FUNCTIONS
