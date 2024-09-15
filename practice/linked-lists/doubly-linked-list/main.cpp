@@ -45,11 +45,13 @@ int main()
     Node* listHead{nullptr};
     for (int i{1}; i <= 5; ++i) {
         insertAtEnd(listHead, i);
+        insertAtEnd(listHead, i);
     }
+    deleteWithValue(listHead, 1);
     std::cout << "List:";
     printList(listHead);
 
-    swapValuePairs(listHead);
+    removeConsecutiveDuplicates(listHead);
     std::cout << "List:";
     printList(listHead);
 
@@ -328,7 +330,8 @@ void removeConsecutiveDuplicates(Node* head) {
         if (comparePtrA->data == comparePtrB->data) {
             // the duplicate is at the end of the list
             if (comparePtrB->next == nullptr) {
-                deleteAtEnd(head);
+                comparePtrA->next = nullptr;
+                delete comparePtrB;
                 return;
             }
 
@@ -336,12 +339,15 @@ void removeConsecutiveDuplicates(Node* head) {
             Node* tempPtr{comparePtrB};
             comparePtrA->next = comparePtrB->next;
             comparePtrB->next->prev = comparePtrA;
+
+            // move pointer safely
             comparePtrB = comparePtrB->next;
+
             delete tempPtr;
         } else {
             // move pointers safely
             comparePtrA = comparePtrB;
-            comparePtrB = comparePtrA->next;
+            comparePtrB = comparePtrB->next;
         }
     }
 }
