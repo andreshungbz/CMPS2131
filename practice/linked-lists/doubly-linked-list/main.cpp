@@ -45,19 +45,24 @@ int main()
     Node* listHead{nullptr};
     for (int i{1}; i <= 5; ++i) {
         insertAtEnd(listHead, i);
-        insertAtEnd(listHead, i);
     }
-    for (int i{1}; i <= 5; ++i) {
-        insertAtEnd(listHead, i);
+    Node* listHead2{nullptr};
+    for (int i{6}; i <= 10; ++i) {
+        insertAtEnd(listHead2, i);
     }
-    std::cout << "List:";
+    std::cout << "List1:";
     printList(listHead);
+    std::cout << "List2:";
+    printList(listHead2);
 
-    removeDuplicates(listHead);
-    std::cout << "List:";
-    printList(listHead);
+    Node* listHead3{concatenate(listHead, listHead2)};
+    std::cout << "List3:";
+    printList(listHead3);
 
     deleteList(listHead);
+    deleteList(listHead2);
+    deleteList(listHead3);
+
     return 0;
 }
 
@@ -437,21 +442,21 @@ void reverseList(Node* head) {
 
 Node* concatenate(const Node* headA, const Node* headB) {
     // create a new list
-    Node* head{nullptr};
+    Node* newHead{nullptr};
 
     // create nodes from list A
     while (headA != nullptr) {
-        insertAtEnd(head, headA->data);
+        insertAtEnd(newHead, headA->data);
         headA = headA->next;
     }
 
     // create nodes from list B
     while (headB != nullptr) {
-        insertAtEnd(head, headB->data);
+        insertAtEnd(newHead, headB->data);
         headB = headB->next;
     }
 
-    return head;
+    return newHead;
 }
 
 Node* deepCopy(const Node* head) {
