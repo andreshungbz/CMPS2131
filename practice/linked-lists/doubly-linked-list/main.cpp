@@ -24,6 +24,7 @@ void insertAtPosition(Node*& head, int position, int value);
 void deleteAtBeginning(Node*& head);
 void deleteAtEnd(Node*& head);
 void deleteWithValue(Node*& head, int target);
+void deleteAtPosition(Node*& head, int position);
 
 // PRINTING FUNCTIONS
 void printReverse(const Node* head);
@@ -50,7 +51,7 @@ int main()
     std::cout << "List:";
     printList(listHead);
 
-    insertAtPosition(listHead, 45, 9);
+    deleteAtPosition(listHead, 4);
     std::cout << "List:";
     printList(listHead);
 
@@ -299,6 +300,55 @@ void deleteWithValue(Node*& head, int target) {
 
     // delete node and link with rest of list
     currentPtr->prev->next = currentPtr->next;
+    delete currentPtr;
+}
+
+void deleteAtPosition(Node*& head, int position) {
+    // empty list
+    if (head == nullptr) {
+        std::cout << "Error: Empty list.\n";
+        return;
+    }
+
+    // list has only one node
+    if (head->next == nullptr) {
+        delete head;
+        head = nullptr;
+        return;
+    }
+
+    // delete @ beginning
+    if (position <= 1) {
+        Node* tempPtr{head};
+        head = head->next;
+        head->prev = nullptr;
+        delete tempPtr;
+        return;
+    }
+
+    // for doubly-linked lists, we can have a pointer to the node to delete
+    int traversals{position - 1};
+    Node* currentPtr{head};
+    for (int i{0}; i < traversals; ++i) {
+        // keep at last node if traversals would overflow
+        if (currentPtr->next != nullptr) {
+            currentPtr = currentPtr->next;
+        }
+    }
+
+    // delete @ end
+    if (currentPtr->next == nullptr) {
+        Node* tempPtr{currentPtr};
+        currentPtr->prev->next = nullptr;
+        delete tempPtr;
+        return;
+    }
+
+    // link nodes on each side of deleted node
+    currentPtr->prev->next = currentPtr->next;
+    currentPtr->next->prev = currentPtr->prev;
+
+    // delete node
     delete currentPtr;
 }
 
