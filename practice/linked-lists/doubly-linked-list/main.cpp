@@ -49,6 +49,10 @@ int main()
     std::cout << "List:";
     printList(listHead);
 
+    insertAfterValue(listHead, 5, 9);
+    std::cout << "List:";
+    printList(listHead);
+
     deleteList(listHead);
     return 0;
 }
@@ -124,9 +128,15 @@ void insertAtEnd(Node*& head, int value) {
 }
 
 void insertAfterValue(Node*& head, int target, int value) {
+    // create new node
+    Node* newPtr{new Node()};
+    newPtr->prev = nullptr;
+    newPtr->data = value;
+    newPtr->next = nullptr;
+
     // empty list
     if (head == nullptr) {
-        std::cout << "Error Inserting: No target value found.\n";
+        std::cout << "Error: Target not found.\n";
         return;
     }
 
@@ -138,27 +148,21 @@ void insertAfterValue(Node*& head, int target, int value) {
 
     // no target value found
     if (currentPtr == nullptr) {
-        std::cout << "Error Inserting: No target value found.\n";
+        std::cout << "Error: Target not found.\n";
         return;
     }
 
     // target node is @ end of list
     if (currentPtr->next == nullptr) {
-        insertAtEnd(head, value);
+        currentPtr->next = newPtr;
+        newPtr->prev = currentPtr;
         return;
     }
 
-    // create new node
-    Node* newPtr{new Node()};
-    newPtr->data = value;
-
-    // insert node and link rest of list
-
-    // link node after
+    // link node that goes after new node
     newPtr->next = currentPtr->next;
     currentPtr->next->prev = newPtr;
-
-    // link node before
+    // link node that goes before new node
     currentPtr->next = newPtr;
     newPtr->prev = currentPtr;
 }
