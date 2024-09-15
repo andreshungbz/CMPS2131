@@ -17,6 +17,7 @@ void deleteList(Node*& head);
 void insertAtBeginning(Node*& head, int value);
 void insertAtEnd(Node*& head, int value);
 void insertAfterValue(Node*& head, int target, int value); // only after first instance of target
+void insertAtPosition(Node*& head, int position, int value);
 
 // DELETING FUNCTIONS
 void deleteAtBeginning(Node*& head);
@@ -42,15 +43,13 @@ Node* deepCopy(const Node* head);
 int main()
 {
     Node* listHead{nullptr};
-    for (int i{1}; i <= 3; ++i) {
-        insertAtEnd(listHead, i);
+    for (int i{1}; i <= 5; ++i) {
         insertAtEnd(listHead, i);
     }
-    deleteWithValue(listHead, 2);
     std::cout << "List:";
     printList(listHead);
 
-    removeConsecutiveDuplicates(listHead);
+    insertAtPosition(listHead, -1, 9);
     std::cout << "List:";
     printList(listHead);
 
@@ -155,6 +154,39 @@ void insertAfterValue(Node*& head, int target, int value) {
     }
 
     // there are nodes after target node that need to be linked
+    newPtr->next = currentPtr->next;
+    currentPtr->next = newPtr;
+}
+
+void insertAtPosition(Node*& head, int position, int value) {
+    // create new node
+    Node* newPtr{new Node()};
+    newPtr->data = value;
+    newPtr->next = nullptr;
+
+    if (position <= 1 || head == nullptr) {
+        newPtr->next = head;
+        head = newPtr;
+        return;
+    }
+
+    // traverse a pointer to node before where the new position is
+    int traversals{position - 2};
+    Node* currentPtr{head};
+    for (int i{0}; i < traversals; ++i) {
+        // keep pointer at last node if traversals overflow list
+        if (currentPtr->next != nullptr) {
+            currentPtr = currentPtr->next;
+        }
+    }
+
+    // overflows add new node at the end of list
+    if (currentPtr->next == nullptr) {
+        currentPtr->next = newPtr;
+        return;
+    }
+
+    // add new node and link rest of list
     newPtr->next = currentPtr->next;
     currentPtr->next = newPtr;
 }
