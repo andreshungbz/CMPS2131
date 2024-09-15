@@ -49,7 +49,7 @@ int main()
     std::cout << "List:";
     printList(listHead);
 
-    insertAfterValue(listHead, 5, 9);
+    deleteWithValue(listHead, 4);
     std::cout << "List:";
     printList(listHead);
 
@@ -217,13 +217,16 @@ void deleteAtEnd(Node*& head) {
 void deleteWithValue(Node*& head, int target) {
     // empty list
     if (head == nullptr) {
-        std::cout << "Error Deleting: Empty list.\n";
+        std::cout << "Error: Empty list.\n";
         return;
     }
 
     // target is first node in list
     if (head->data == target) {
-        deleteAtBeginning(head);
+        Node* tempPtr{head};
+        head = head->next;
+        head->prev = nullptr;
+        delete tempPtr;
         return;
     }
 
@@ -235,13 +238,14 @@ void deleteWithValue(Node*& head, int target) {
 
     // no target value found
     if (currentPtr == nullptr) {
-        std::cout << "Error Deleting: No target value found.\n";
+        std::cout << "Error: Target not found.\n";
         return;
     }
 
     // target node is @ end of list
     if (currentPtr->next == nullptr) {
-        deleteAtEnd(head);
+        currentPtr->prev->next = nullptr;
+        delete currentPtr;
         return;
     }
 
