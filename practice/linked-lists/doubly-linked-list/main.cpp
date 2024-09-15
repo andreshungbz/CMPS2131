@@ -46,10 +46,7 @@ int main()
     for (int i{1}; i <= 5; ++i) {
         insertAtEnd(listHead, i);
     }
-    Node* listHead2{nullptr};
-    for (int i{6}; i <= 10; ++i) {
-        insertAtEnd(listHead2, i);
-    }
+    Node* listHead2{deepCopy(listHead)};
     std::cout << "List1:";
     printList(listHead);
     std::cout << "List2:";
