@@ -71,21 +71,11 @@ void printList(const Node* head) {
 }
 
 void deleteList(Node*& head) {
-    // empty list
-    if (head == nullptr) {
-        return;
-    }
-
-    // traverse through the list, deleting every node using a temporary pointer
-    Node* currentPtr{head};
-    while (currentPtr != nullptr) {
-        Node* tempPtr = currentPtr;
-        currentPtr = currentPtr->next;
+    while (head != nullptr) {
+        Node* tempPtr = head;
+        head = head->next;
         delete tempPtr;
     }
-
-    // reset original list
-    head = nullptr;
 }
 
 // INSERTING FUNCTIONS
