@@ -36,6 +36,7 @@ void removeConsecutiveDuplicates(Node* head);
 void removeDuplicates(Node* head);
 void simpleConcatenate(Node* headA, Node* headB);
 void reverseList(Node*& head);
+void removeOdd(Node*& head);
 
 // LIST OPERATION FUNCTIONS
 Node* concatenate(const Node* headA, const Node* headB);
@@ -50,7 +51,7 @@ int main()
     std::cout << "List:";
     printList(listHead);
 
-    deleteAtPosition(listHead, 67);
+    removeOdd(listHead);
     std::cout << "List:";
     printList(listHead);
 
@@ -483,6 +484,33 @@ void reverseList(Node*& head) {
 
     // reassign head
     head = previousPtr;
+}
+
+void removeOdd(Node*& head) {
+    // empty list
+    if (head == nullptr) {
+        return;
+    }
+
+    // create a dummy pointer for proper looping and reassigning head
+    Node* dummyPtr{new Node()};
+    dummyPtr->next = head;
+
+    // check node ahead for condition, deleting it or traversing pointer
+    // currentPtr will always point to a node with a non-odd value
+    Node* currentPtr{dummyPtr};
+    while (currentPtr != nullptr && currentPtr->next != nullptr) {
+        if (currentPtr->next->data % 2 == 1) {
+            Node* tempPtr{currentPtr->next};
+            currentPtr->next = currentPtr->next->next;
+            delete tempPtr;
+        } else {
+            currentPtr = currentPtr->next;
+        }
+    }
+
+    // important: when all is done set head properly
+    head = dummyPtr->next;
 }
 
 // LIST OPERATION FUNCTIONS
