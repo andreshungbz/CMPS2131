@@ -500,7 +500,7 @@ void removeOdd(Node*& head) {
     // check node ahead for condition, deleting it or traversing pointer
     // currentPtr will always point to a node with a non-odd value
     Node* currentPtr{dummyPtr};
-    while (currentPtr != nullptr && currentPtr->next != nullptr) {
+    while (currentPtr->next != nullptr) {
         if (currentPtr->next->data % 2 == 1) {
             Node* tempPtr{currentPtr->next};
             currentPtr->next = currentPtr->next->next;
