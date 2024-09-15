@@ -47,11 +47,13 @@ int main()
         insertAtEnd(listHead, i);
         insertAtEnd(listHead, i);
     }
-    deleteWithValue(listHead, 1);
+    for (int i{1}; i <= 5; ++i) {
+        insertAtEnd(listHead, i);
+    }
     std::cout << "List:";
     printList(listHead);
 
-    removeConsecutiveDuplicates(listHead);
+    removeDuplicates(listHead);
     std::cout << "List:";
     printList(listHead);
 
@@ -366,11 +368,15 @@ void removeDuplicates(Node* head) {
             if (comparePtrB->data == comparePtrA->data) {
                 // delete duplicate and link rest of list
                 Node* tempPtr{comparePtrB};
+                // link previous node to deleted node's next
                 comparePtrB->prev->next = comparePtrB->next;
+                // if there is a node after, link that to deleted node's prev
                 if (comparePtrB->next != nullptr) {
                     comparePtrB->next->prev = comparePtrB->prev;
                 }
+                // move pointer safely before deleting
                 comparePtrB = comparePtrB->next;
+                // delete node
                 delete tempPtr;
             } else {
                 comparePtrB = comparePtrB->next;
