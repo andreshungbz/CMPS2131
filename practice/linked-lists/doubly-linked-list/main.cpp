@@ -37,6 +37,7 @@ void removeConsecutiveDuplicates(Node* head);
 void removeDuplicates(Node* head);
 void simpleConcatenate(Node* headA, Node* headB);
 void reverseList(Node* head);
+void removeEven(Node*& head);
 
 // LIST OPERATION FUNCTIONS
 Node* concatenate(const Node* headA, const Node* headB);
@@ -45,13 +46,13 @@ Node* deepCopy(const Node* head);
 int main()
 {
     Node* listHead{nullptr};
-    for (int i{1}; i <= 5; ++i) {
+    for (int i{2}; i <= 6; ++i) {
         insertAtEnd(listHead, i);
     }
     std::cout << "List:";
     printList(listHead);
 
-    deleteAtPosition(listHead, 4);
+    removeEven(listHead);
     std::cout << "List:";
     printList(listHead);
 
@@ -65,7 +66,7 @@ int main()
 void printList(const Node* head) {
     // empty list
     if (head == nullptr) {
-        std::cout << "[empty]\n";
+        std::cout << " [empty]\n";
         return;
     }
 
@@ -525,6 +526,34 @@ void reverseList(Node* head) {
         // move pointer at the end backward
         swapPtrB = swapPtrB->prev;
     }
+}
+
+void removeEven(Node*& head) {
+    // empty list
+    if (head == nullptr) {
+        std::cout << "Error: Empty list.\n";
+        return;
+    }
+
+    // create a dummy pointer for proper looping and reassigning head
+    Node* dummyPtr{new Node()};
+    dummyPtr->next = head;
+
+    // check node ahead for condition, deleting it or traversing pointer
+    // currentPtr will always point to a node with a non-even value
+    Node* currentPtr{dummyPtr};
+    while (currentPtr->next != nullptr) {
+        if (currentPtr->next->data % 2 == 0) {
+            Node* tempPtr{currentPtr->next};
+            currentPtr->next = currentPtr->next->next;
+            delete tempPtr;
+        } else {
+            currentPtr = currentPtr->next;
+        }
+    }
+
+    // important: when all is done set head properly
+    head = dummyPtr->next;
 }
 
 // LIST OPERATION FUNCTIONS
