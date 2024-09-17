@@ -83,7 +83,7 @@ bool isPalindrome(const char* word) {
 
     // populate stack with every letter of word minus null terminator
     const char* currentPtr{word};
-    while (*currentPtr != '\0') {
+    while (*currentPtr != '\0') { // change to *currentPtr != '.' for using '.' as end point
         push(checkStack, *currentPtr);
         ++currentPtr;
     }
