@@ -92,7 +92,7 @@ bool isPalindrome(const char* word) {
     char temp{pop(checkStack)}; // do this again for using '.' as end point
     // traverse word from beginning again
     currentPtr = word;
-    while (*currentPtr != '\0' || temp != '\0') { // change to *currentPtr != '.' for using '.' as end point
+    while (*currentPtr != '\0') { // change to *currentPtr != '.' for using '.' as end point
         if (*currentPtr != temp) {
             // when short-circuiting, delete rest of stack
             deleteStack(checkStack);
@@ -103,5 +103,6 @@ bool isPalindrome(const char* word) {
         ++currentPtr;
     }
 
+    // all of checkStack will have been deleted at this point
     return true;
 }
