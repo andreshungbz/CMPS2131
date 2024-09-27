@@ -341,7 +341,7 @@ private:
 
     // utility function for printing the system options menu
     static void printMenu() {
-        std::cout << "Food Order Management System Options\n";
+        std::cout << "-- Food Order Management System Options --\n";
 
         std::cout << "1) Place Order\n";
         std::cout << "2) Place Express Order\n";
