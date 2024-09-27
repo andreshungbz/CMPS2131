@@ -3,4 +3,4 @@ project(food_order_management)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(food_order_management main.cpp)
+add_executable(food_order_management_system main.cpp)
