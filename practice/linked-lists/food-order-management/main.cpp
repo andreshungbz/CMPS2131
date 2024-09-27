@@ -285,18 +285,23 @@ public:
             switch(response) {
             case 1:
                 placeOrder();
+                pause();
                 break;
             case 2:
                 placeExpressOrder();
+                pause();
                 break;
             case 3:
                 processNextOrder();
+                pause();
                 break;
             case 4:
                 pendingOrders();
+                pause();
                 break;
             case 5:
                 pendingOrdersCount();
+                pause();
                 break;
             case 6:
                 std::cout << "Exiting program...\n";
@@ -309,6 +314,13 @@ public:
 private:
     std::string systemName{};
     OrderQueue system{};
+
+    // utility function for pausing on Windows systems only
+    void pause() {
+    #if defined(_WIN32)
+        system("pause");
+    #endif
+    }
 };
 
 int main() {
