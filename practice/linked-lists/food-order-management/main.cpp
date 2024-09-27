@@ -297,7 +297,7 @@ public:
 
     // Menu-driven driver program that prompts user continually until program exit
     void driverProgram() {
-        std::cout << "-- Welcome to the " << systemName << " Food Order Management System! --\n\n";
+        std::cout << "-- Welcome to the " << systemName << " Food Order Management System! --\n";
 
         int response{0};
         while (true) {
@@ -341,7 +341,7 @@ private:
 
     // utility function for printing the system options menu
     static void printMenu() {
-        std::cout << "-- Food Order Management System Options --\n";
+        std::cout << "\n-- Food Order Management System Options --\n";
 
         std::cout << "1) Place Order\n";
         std::cout << "2) Place Express Order\n";
