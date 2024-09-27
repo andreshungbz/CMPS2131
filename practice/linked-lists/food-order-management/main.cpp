@@ -295,20 +295,6 @@ public:
         std::cout << '\n';
     }
 
-    // utility function for printing the system options menu
-    static void printMenu() {
-        std::cout << "Food Order Management System Options\n";
-
-        std::cout << "1) Place Order\n";
-        std::cout << "2) Place Express Order\n";
-        std::cout << "3) Process Next Order\n";
-        std::cout << "4) Pending Orders\n";
-        std::cout << "5) Pending Orders Count\n";
-        std::cout << "6) Stop Program\n";
-
-        std::cout << '\n';
-    }
-
     // Menu-driven driver program that prompts user continually until program exit
     void driverProgram() {
         std::cout << "-- Welcome to the " << systemName << " Food Order Management System! --\n\n";
@@ -352,6 +338,20 @@ public:
 private:
     std::string systemName{};
     OrderQueue system{};
+
+    // utility function for printing the system options menu
+    static void printMenu() {
+        std::cout << "Food Order Management System Options\n";
+
+        std::cout << "1) Place Order\n";
+        std::cout << "2) Place Express Order\n";
+        std::cout << "3) Process Next Order\n";
+        std::cout << "4) Pending Orders\n";
+        std::cout << "5) Pending Orders Count\n";
+        std::cout << "6) Stop Program\n";
+
+        std::cout << '\n';
+    }
 
     // utility function for pausing on Windows systems only
     void pause() {
