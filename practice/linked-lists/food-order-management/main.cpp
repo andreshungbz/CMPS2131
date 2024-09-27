@@ -302,6 +302,9 @@ public:
 
         int response{0};
         while (true) {
+            // clear input buffer
+            std::cin.ignore();
+
             printMenu();
             std::cout << "Enter option number (1-6): ";
             std::cin >> response;
