@@ -215,7 +215,7 @@ public:
     // displayOrders shows details of every order in the Queue
     void displayOrders() {
         if (orderQueueHead == nullptr) {
-            std::cout << "The order queue is empty.\n";
+            std::cout << "The order queue is empty.\n\n";
             return;
         }
 
