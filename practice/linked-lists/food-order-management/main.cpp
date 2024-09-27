@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 #include <string>
 
 // Class Include Structure
@@ -304,6 +305,15 @@ public:
             printMenu();
             std::cout << "Enter option number (1-6): ";
             std::cin >> response;
+
+            // add basic input validation
+            // https://www.learncpp.com/cpp-tutorial/stdcin-and-handling-invalid-input/
+            if (!std::cin) {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+                continue;
+            }
 
             // Execute corresponding member function
             switch(response) {
