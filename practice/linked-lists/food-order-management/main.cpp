@@ -356,7 +356,7 @@ private:
     // utility function for pausing on Windows systems only
     void pause() {
     #if defined(_WIN32)
-        system("pause");
+        std::system("pause");
     #endif
     }
 };
