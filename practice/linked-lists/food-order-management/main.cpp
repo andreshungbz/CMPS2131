@@ -1,6 +1,12 @@
 #include <iostream>
 #include <string>
 
+// Class Include Structure
+// ItemQueue class contains Item instances
+// Order class contains one ItemQueue instance
+// OrderQueue class contains Order instances
+// FoodOrderManagementSystem contains one OrderQueue instance and the driver program
+
 // Item Implementation
 // The ItemQueue class stores a collection of Items, each containing an item name and its quantity.
 // Items are connected in a singly-linked fashion.
@@ -9,17 +15,22 @@
 // Item Node
 class Item {
 public:
+    // constructor
     Item(std::string& name, int itemQuantity)
         : itemName(name), itemQuantity(itemQuantity) {}
 
+    // displays item in formated fashion
     void display(int orderNumber, int itemNumber) const {
         std::cout << "\tItem " << orderNumber << '.' << itemNumber << ") " << itemName << " (quantity: "
             << itemQuantity << ")\n";
     }
 
+    // data members
+    // these are public for convenience, but if made private, friend class is applied to ItemQueue
+    // friend class ItemQueue;
     std::string itemName{};
     int itemQuantity{};
-    Item* next{nullptr};
+    Item* next{nullptr}; // link to next item
 };
 
 // Item Queue
@@ -96,16 +107,21 @@ private:
 // Order Node
 class Order {
 public:
+    // constructor
     explicit Order(std::string& name) : customerName(name) {}
 
+    // displays order and itesm in formatted fashion
     void display(int number) const {
         std::cout << "Order " << number << ") " << customerName << '\n';
         itemsList.displayItems(number);
     }
 
+    // data members
+    // these are public for convenience, but if made private, friend class is applied to OrderQueue
+    // friend class OrderQueue;
     std::string customerName{};
     ItemQueue itemsList{};
-    Order* next{nullptr};
+    Order* next{nullptr}; // link to next order
 };
 
 // Order Queue
@@ -126,11 +142,12 @@ public:
     }
 
     // addOrder enqueues Order at the end and increments orderCount
+    // if express parameter is true, enqueue at the beginning
     void addOrder(std::string customerName, bool express = false) {
         Order* orderPtr{new Order(customerName)};
         ++orderCount;
 
-        // add items to order
+        // prompt for items to add to the order
         char continuePrompt{};
         do {
             // add at least one item to Order
@@ -176,9 +193,9 @@ public:
             return;
         }
 
-        // display order details before deleting
+        // display order details
         std::cout << "-- Next Order --\n";
-        orderQueueHead->display(0);
+        orderQueueHead->display(0); // 0 symbolizes the most immediate order
         std::cout << '\n';
 
         char response{};
@@ -202,6 +219,8 @@ public:
             return;
         }
 
+        // this counter is passed progressively into the display functions
+        // of Order and Item for formatting
         int counter{1};
 
         Order* currentPtr{orderQueueHead};
@@ -213,46 +232,62 @@ public:
     }
 private:
     Order* orderQueueHead{nullptr};
-    int orderCount{0};
+    int orderCount{0}; // pending orders count is stored here and retrieved via its getter
 };
+
+// FoodOrderManagementSystem Implementation
+// The FoodOrderManagementSystem Class utilizes the OrderQueue Class and contains the driver program
 
 class FoodOrderManagementSystem {
 public:
+    // constructor
     explicit FoodOrderManagementSystem(std::string name) : systemName(name) {}
 
+    // Question 1.1 - Create an order with customer name and variable number of items
     void placeOrder() {
         std::cout << "\n-- Place Order --\n";
 
+        // prompt for customer name
         std::string customerName{};
         std::cout << "Enter customer name: ";
         std::getline(std::cin >> std::ws, customerName);
 
+        // add order
         system.addOrder(customerName);
+
         std::cout << '\n';
     }
 
+    // Question 2 - Create an express order with higher priority
+    // Assumption: every new express order has higher priority than previously added express orders
     void placeExpressOrder() {
         std::cout << "\n-- Place Express Order --\n";
 
+        // prompt for customer name
         std::string customerName{};
         std::cout << "Enter customer name: ";
         std::getline(std::cin >> std::ws, customerName);
 
+        // add express order
         system.addOrder(customerName, true);
+
         std::cout << '\n';
     }
 
+    // Question 1.2 - Display the next order to be processed and prompts to remove it from the queue
     void processNextOrder() {
         std::cout << "\n-- Process Next Order --\n\n";
         system.processOrder();
         std::cout << '\n';
     }
 
+    // Question 1.3 - Display the pending orders, with customer name and items in each order
     void pendingOrders() {
         std::cout << "\n-- Pending Orders --\n\n";
         system.displayOrders();
     }
 
+    // Question 1.4 - Display the number of pending orders in the system
     void pendingOrdersCount() {
         std::cout << "\n-- Pending Orders Count --\n";
         std::cout << "There are " << system.getOrderCount() << " pending orders in "
@@ -260,7 +295,8 @@ public:
         std::cout << '\n';
     }
 
-    void printMenu() {
+    // utility function for printing the system options menu
+    static void printMenu() {
         std::cout << "Food Order Management System Options\n";
 
         std::cout << "1) Place Order\n";
@@ -273,6 +309,7 @@ public:
         std::cout << '\n';
     }
 
+    // Menu-driven driver program that prompts user continually until program exit
     void driverProgram() {
         std::cout << "-- Welcome to the " << systemName << " Food Order Management System! --\n\n";
 
@@ -282,6 +319,7 @@ public:
             std::cout << "Enter option number (1-6): ";
             std::cin >> response;
 
+            // Execute corresponding member function
             switch(response) {
             case 1:
                 placeOrder();
@@ -303,7 +341,7 @@ public:
                 pendingOrdersCount();
                 pause();
                 break;
-            case 6:
+            case 6: // Question 1.5 - This option exits the program
                 std::cout << "Exiting program...\n";
                 return;
             default:
@@ -323,6 +361,7 @@ private:
     }
 };
 
+// Execute and test driver program
 int main() {
     FoodOrderManagementSystem hoosieBurgers{"Hoosie Burgers"};
     hoosieBurgers.driverProgram();
