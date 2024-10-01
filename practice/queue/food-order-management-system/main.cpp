@@ -376,8 +376,8 @@ private:
 
 // Execute and test driver program
 int main() {
-    FoodOrderManagementSystem hoosieBurgers{"Hoosie Burgers"};
-    hoosieBurgers.driverProgram();
+    FoodOrderManagementSystem hoosierBurgers{"Hoosier Burgers"};
+    hoosierBurgers.driverProgram();
 
     return 0;
 }
