@@ -1,11 +1,11 @@
 #include <iostream>
 
 constexpr int MAX{5};
-int top{0};
+int top{-1};
 int array[MAX];
 
 bool isFull() {
-    if (top >= MAX) {
+    if (top >= MAX - 1) {
         std::cout << "Stack Overflow error. ";
         return true;
     }
@@ -15,12 +15,12 @@ bool isFull() {
 
 void push(int value) {
     if (!isFull()) {
-        array[top++] = value;
+        array[++top] = value;
     }
 }
 
 int numberofelements() {
-    return top;
+    return top < 0 ? 0 : top + 1;
 }
 
 int main() {
