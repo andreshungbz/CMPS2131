@@ -98,6 +98,15 @@ public:
         // make sure that last node shifted is removed
         priorityQueue[indexToLast + 1] = nullptr;
     }
+
+    // simple print function
+    void print() {
+        std::cout << "Array Priority Queue:";
+        for (int i{0}; i < indexToLast + 1; ++i) {
+            std::cout << ' ' << priorityQueue[i]->data;
+        }
+        std::cout << '\n';
+    }
 private:
     static constexpr int MAX_SIZE{100};
     Node* priorityQueue[MAX_SIZE] {nullptr};
@@ -106,6 +115,7 @@ private:
 
 int main() {
     ArrayPriorityQueue test{};
+
     test.Enqueue(5, 0);
     test.Enqueue(6, 0);
     test.Enqueue(7, 1);
@@ -113,12 +123,14 @@ int main() {
     test.Enqueue(9, 2);
     test.Enqueue(10, 1);
 
+    test.print();
+
     test.Dequeue();
     test.Dequeue();
     test.Dequeue();
     test.Dequeue();
-    test.Dequeue();
-    test.Dequeue();
+
+    test.print();
 
     // In the worst case, array implementation Enqueue is O(n).
     // Inserting at the beginning and shifting every other node up.
