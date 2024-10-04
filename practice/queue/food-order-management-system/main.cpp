@@ -118,7 +118,7 @@ public:
 
     // displays order and itesm in formatted fashion
     void display(int number) const {
-        std::cout << "Order " << number << ") " << customerName << '\n';
+        std::cout << (express ? "Express " : "") << "Order " << number << ") " << customerName << '\n';
         itemsList.displayItems(number);
     }
 
@@ -127,6 +127,7 @@ public:
     // friend class OrderQueue;
     std::string customerName{};
     ItemQueue itemsList{};
+    bool express{false};
     Order* next{nullptr}; // link to next order
 };
 
@@ -173,25 +174,43 @@ public:
         // feedback
         std::cout << "Order has been added to system!\n";
 
-        if (firstPtr == nullptr && lastPtr == nullptr) {
-            firstPtr = lastPtr = orderPtr;
-            return;
-        }
-
-        // express orders become the new first order in the queue
         if (express) {
-            orderPtr->next = firstPtr;
-            firstPtr = orderPtr;
-            return;
-        }
+            // set Order as express
+            orderPtr->express = true;
 
-        lastPtr->next = orderPtr;
-        lastPtr = orderPtr;
+            if (firstPtr == nullptr) {
+                firstPtr = lastPtr = orderPtr;
+                return;
+            }
+
+            // express order becomes the new first order in the queue if no other express orders exist
+            if (!firstPtr->express) {
+                orderPtr->next = firstPtr;
+                firstPtr = orderPtr;
+                return;
+            }
+
+            Order* currentPtr{firstPtr};
+            while (currentPtr->next != nullptr && currentPtr->next->express) {
+                currentPtr = currentPtr->next;
+            }
+
+            orderPtr->next = currentPtr->next;
+            currentPtr->next = orderPtr;
+        } else {
+            if (firstPtr == nullptr && lastPtr == nullptr) {
+                firstPtr = lastPtr = orderPtr;
+                return;
+            }
+
+            lastPtr->next = orderPtr;
+            lastPtr = orderPtr;
+        }
     }
 
     // processOrder dequeues Order at the beginning and decrements orderCount
     void processOrder() {
-        if (firstPtr == nullptr) {
+        if (firstPtr == nullptr && lastPtr == nullptr) {
             std::cout << "The order queue is empty.\n";
             return;
         }
@@ -211,6 +230,10 @@ public:
             if (firstPtr == lastPtr) {
                 delete tempPtr;
                 firstPtr = lastPtr = nullptr;
+                --orderCount;
+
+                std::cout << "Order has been processed.\n";
+
                 return;
             }
 
@@ -270,7 +293,7 @@ public:
     }
 
     // Question 2 - Create an express order with higher priority
-    // Assumption: every new express order has higher priority than previously added express orders
+    // Assumption: every new express order is placed after every other express order
     void placeExpressOrder() {
         std::cout << "\n-- Place Express Order --\n";
 
