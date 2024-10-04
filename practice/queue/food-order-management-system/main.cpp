@@ -135,9 +135,9 @@ class OrderQueue {
 public:
     // destructor reallocates memory
     ~OrderQueue() {
-        while (orderQueueHead != nullptr) {
-            Order* tempPtr{orderQueueHead};
-            orderQueueHead = orderQueueHead->next;
+        while (firstPtr != nullptr) {
+            Order* tempPtr{firstPtr};
+            firstPtr = firstPtr->next;
             delete tempPtr;
         }
     }
@@ -173,35 +173,32 @@ public:
         // feedback
         std::cout << "Order has been added to system!\n";
 
-        if (orderQueueHead == nullptr) {
-            orderQueueHead = orderPtr;
+        if (firstPtr == nullptr && lastPtr == nullptr) {
+            firstPtr = lastPtr = orderPtr;
             return;
         }
 
         // express orders become the new first order in the queue
         if (express) {
-            orderPtr->next = orderQueueHead;
-            orderQueueHead = orderPtr;
+            orderPtr->next = firstPtr;
+            firstPtr = orderPtr;
             return;
         }
 
-        Order* currentPtr{orderQueueHead};
-        while (currentPtr->next != nullptr) {
-            currentPtr = currentPtr->next;
-        }
-        currentPtr->next = orderPtr;
+        lastPtr->next = orderPtr;
+        lastPtr = orderPtr;
     }
 
     // processOrder dequeues Order at the beginning and decrements orderCount
     void processOrder() {
-        if (orderQueueHead == nullptr) {
+        if (firstPtr == nullptr) {
             std::cout << "The order queue is empty.\n";
             return;
         }
 
         // display order details
         std::cout << "-- Next Order --\n";
-        orderQueueHead->display(0); // 0 symbolizes the most immediate order
+        firstPtr->display(0); // 0 symbolizes the most immediate order
         std::cout << '\n';
 
         char response{};
@@ -209,18 +206,25 @@ public:
         std::cin >> response;
 
         if (response == 'y' || response == 'Y') {
-            Order* tempPtr{orderQueueHead};
-            orderQueueHead = orderQueueHead->next;
-            delete tempPtr;
+            Order* tempPtr{firstPtr};
 
+            if (firstPtr == lastPtr) {
+                delete tempPtr;
+                firstPtr = lastPtr = nullptr;
+                return;
+            }
+
+            firstPtr = firstPtr->next;
+            delete tempPtr;
             --orderCount;
+
             std::cout << "Order has been processed.\n";
         }
     }
 
     // displayOrders shows details of every order in the Queue
     void displayOrders() {
-        if (orderQueueHead == nullptr) {
+        if (firstPtr == nullptr) {
             std::cout << "The order queue is empty.\n\n";
             return;
         }
@@ -229,7 +233,7 @@ public:
         // of Order and Item for formatting
         int counter{1};
 
-        Order* currentPtr{orderQueueHead};
+        Order* currentPtr{firstPtr};
         while (currentPtr != nullptr) {
             currentPtr->display(counter++);
             currentPtr = currentPtr->next;
@@ -237,7 +241,8 @@ public:
         }
     }
 private:
-    Order* orderQueueHead{nullptr};
+    Order* firstPtr{nullptr};
+    Order* lastPtr{nullptr};
     int orderCount{0}; // pending orders count is stored here and retrieved via its getter
 };
 
