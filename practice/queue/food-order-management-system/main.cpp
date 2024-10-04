@@ -296,7 +296,7 @@ public:
     // Question 1.4 - Display the number of pending orders in the system
     void pendingOrdersCount() {
         std::cout << "\n-- Pending Orders Count --\n";
-        std::cout << "There are " << system.getOrderCount() << " pending orders in "
+        std::cout << "There are " << system.getOrderCount() << " pending order(s) in "
             << systemName << '\n';
         std::cout << '\n';
     }
