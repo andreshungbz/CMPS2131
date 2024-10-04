@@ -39,9 +39,9 @@ class ItemQueue {
 public:
     // destructor reallocates memory
     ~ItemQueue() {
-        while (itemQueueHead != nullptr) {
-            Item* tempPtr{itemQueueHead};
-            itemQueueHead = itemQueueHead->next;
+        while (firstPtr != nullptr) {
+            Item* tempPtr{firstPtr};
+            firstPtr = firstPtr->next;
             delete tempPtr;
         }
     }
@@ -56,48 +56,53 @@ public:
         Item* itemPtr{new Item(itemName, itemQuantity)};
         ++itemCount;
 
-        if (itemQueueHead == nullptr) {
-            itemQueueHead = itemPtr;
+        if (firstPtr == nullptr && lastPtr == nullptr) {
+            firstPtr = lastPtr = itemPtr;
             return;
         }
 
-        Item* currentPtr{itemQueueHead};
-        while (currentPtr->next != nullptr) {
-            currentPtr = currentPtr->next;
-        }
-        currentPtr->next = itemPtr;
+        lastPtr->next = itemPtr;
+        lastPtr = itemPtr;
     }
 
     // processItem dequeues Item at the beginning and decrements itemCount
     void processItem() {
-        if (itemQueueHead == nullptr) {
+        if (firstPtr == nullptr && lastPtr == nullptr) {
             std::cout << "ItemQueue is empty.\n";
             return;
         }
 
-        Item* tempPtr{itemQueueHead};
-        itemQueueHead = itemQueueHead->next;
+        Item* tempPtr{firstPtr};
+
+        if (firstPtr == lastPtr) {
+            delete tempPtr;
+            firstPtr = lastPtr = nullptr;
+            return;
+        }
+
+        firstPtr = firstPtr->next;
         delete tempPtr;
         --itemCount;
     }
 
     // displayItems shows details of every item in the Queue
     void displayItems(int number) const {
-        if (itemQueueHead == nullptr) {
+        if (firstPtr == nullptr) {
             std::cout << "ItemQueue is empty.\n";
             return;
         }
 
         int counter{1};
 
-        Item* currentPtr{itemQueueHead};
+        Item* currentPtr{firstPtr};
         while (currentPtr != nullptr) {
             currentPtr->display(number, counter++);
             currentPtr = currentPtr->next;
         }
     }
 private:
-    Item* itemQueueHead{nullptr};
+    Item* firstPtr{nullptr};
+    Item* lastPtr{nullptr};
     int itemCount{0};
 };
 
