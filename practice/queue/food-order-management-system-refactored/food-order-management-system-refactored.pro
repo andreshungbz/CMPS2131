@@ -1,5 +1,5 @@
 TEMPLATE = app
-CONFIG += c++20
+CONFIG += c++17
 
 # project name
 TARGET = food_order_management_system_refactored
