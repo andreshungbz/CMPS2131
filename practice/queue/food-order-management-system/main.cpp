@@ -67,7 +67,7 @@ public:
 
     // processItem dequeues Item at the beginning and decrements itemCount
     void processItem() {
-        if (firstPtr == nullptr && lastPtr == nullptr) {
+        if (firstPtr == nullptr || lastPtr == nullptr) {
             std::cout << "ItemQueue is empty.\n";
             return;
         }
@@ -197,6 +197,11 @@ public:
 
             orderPtr->next = currentPtr->next;
             currentPtr->next = orderPtr;
+
+            // if the express order is the last order, set lastPtr
+            if (orderPtr->next == nullptr) {
+                lastPtr = orderPtr;
+            }
         } else {
             if (firstPtr == nullptr && lastPtr == nullptr) {
                 firstPtr = lastPtr = orderPtr;
