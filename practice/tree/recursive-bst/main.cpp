@@ -11,18 +11,9 @@ void insertNode(Node*& root, int value);
 void printTree(Node* root, int traversal);
 int treeNodeCount(Node* root);
 Node* retrieveNode(Node*& root, int value);
-int treeHeight(Node* root) {
-    if (root == nullptr) {
-        return 0;
-    }
+int treeHeight(Node* root);
 
-    int leftHeight = treeHeight(root->left);
-    int rightHeight = treeHeight(root->right);
-
-    return (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
-}
-
-Node* getLogicalPredecessor(Node* root);
+Node* getInorderPredecessor(Node* root);
 void deleteNode(Node*& root, int value);
 void deleteFromTree(Node*& root, int value);
 
@@ -122,7 +113,18 @@ Node* retrieveNode(Node*& root, int value) {
     }
 }
 
-Node* getLogicalPredecessor(Node* root) {
+int treeHeight(Node* root) {
+    if (root == nullptr) {
+        return 0;
+    }
+
+    int leftHeight = treeHeight(root->left);
+    int rightHeight = treeHeight(root->right);
+
+    return (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
+}
+
+Node* getInorderPredecessor(Node* root) {
     while (root != nullptr && root->right != nullptr) {
         root = root->right;
     }
@@ -140,7 +142,7 @@ void deleteNode(Node*& root, int value) {
         root = root->left;
         delete tempPtr;
     } else {
-        int logicalPredecessorValue{getLogicalPredecessor(root->left)->data};
+        int logicalPredecessorValue{getInorderPredecessor(root->left)->data};
         root->data = logicalPredecessorValue;
         deleteFromTree(root->left, logicalPredecessorValue);
     }
