@@ -34,6 +34,7 @@ int main() {
     std::cout << '\n';
 
     std::cout << "Tree Node Count: " << treeNodeCount(root) << '\n';
+    std::cout << "Tree Height: " << treeHeight(root) << '\n';
 
     std::cout << "10 exists in tree: " << static_cast<bool>(retrieveNode(root, 10)) << '\n';
     std::cout << "16 exists in tree: " << static_cast<bool>(retrieveNode(root, 16)) << '\n';
@@ -102,7 +103,7 @@ int treeNodeCount(Node* root) {
 
 int treeHeight(Node* root) {
     if (root == nullptr) {
-        return 0;
+        return -1;
     }
 
     int leftHeight = treeHeight(root->left);
