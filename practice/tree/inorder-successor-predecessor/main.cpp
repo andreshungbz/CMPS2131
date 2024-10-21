@@ -53,20 +53,29 @@ Node* getInorderSuccessor(Node* root) {
     return root;
 }
 
-void searchInorderPredecessorSuccessor(Node* root, int value) {
+void searchInorderPredecessor(Node* root, int value) {
     Node* targetNode{searchNode(root, value)};
 
     if (!targetNode) {
-        std::cout << "Target node not found.\n";
+        std::cout << "Node with value " << value << " does not exist in tree.\n";
     } else {
         Node* predecessor{getInorderPredecessor(targetNode->left)};
-        Node* successor{getInorderSuccessor(targetNode->right)};
 
         if (!predecessor) {
             std::cout << "Node with " << targetNode->data << " has no predecessor\n";
         } else {
             std::cout << "Node with " << targetNode->data << " has predecessor of Node with " << predecessor->data << '\n';
         }
+    }
+}
+
+void searchInorderSuccessor(Node* root, int value) {
+    Node* targetNode{searchNode(root, value)};
+
+    if (!targetNode) {
+        std::cout << "Node with value " << value << " does not exist in tree.\n";
+    } else {
+        Node* successor{getInorderSuccessor(targetNode->right)};
 
         if (!successor) {
             std::cout << "Node with " << targetNode->data << " has no successor\n";
@@ -85,7 +94,8 @@ int main()
         insertNode(root, i);
     }
 
-    searchInorderPredecessorSuccessor(root, 4);
+    searchInorderPredecessor(root, 4);
+    searchInorderSuccessor(root, 8);
 
     return 0;
 }
