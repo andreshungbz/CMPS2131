@@ -10,11 +10,12 @@ public:
 void insertNode(Node*& root, int value);
 void printTree(Node* root, int traversal);
 int treeNodeCount(Node* root);
-Node* retrieveNode(Node*& root, int value);
 int treeHeight(Node* root);
+Node* retrieveNode(Node*& root, int value);
+Node* retrieveParentNode(Node* root, int value);
 
-Node* getInorderPredecessor(Node* root);
-void deleteNode(Node*& root, int value);
+Node* getInorderPredecessor(Node* subtree);
+void deleteNode(Node*& root);
 void deleteFromTree(Node*& root, int value);
 
 
@@ -99,6 +100,17 @@ int treeNodeCount(Node* root) {
     return treeNodeCount(root->left) + treeNodeCount(root->right) + 1;
 }
 
+int treeHeight(Node* root) {
+    if (root == nullptr) {
+        return 0;
+    }
+
+    int leftHeight = treeHeight(root->left);
+    int rightHeight = treeHeight(root->right);
+
+    return (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
+}
+
 Node* retrieveNode(Node*& root, int value) {
     if (root == nullptr) {
         return nullptr;
@@ -113,28 +125,35 @@ Node* retrieveNode(Node*& root, int value) {
     }
 }
 
-int treeHeight(Node* root) {
-    if (root == nullptr) {
-        return 0;
+Node* retrieveParentNode(Node* root, int value) {
+    if (root == nullptr || root->data == value) {
+        return nullptr;
     }
 
-    int leftHeight = treeHeight(root->left);
-    int rightHeight = treeHeight(root->right);
-
-    return (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
-}
-
-Node* getInorderPredecessor(Node* root) {
-    while (root != nullptr && root->right != nullptr) {
-        root = root->right;
+    if ((root->left != nullptr && root->left->data == value) ||
+        (root->right != nullptr && root->right->data == value)) {
+        return root;
     }
 
-    return root;
+    if (value < root->data) {
+        return retrieveParentNode(root->left, value);
+    } else {
+        return retrieveParentNode(root->right, value);
+    }
 }
 
-void deleteNode(Node*& root, int value) {
+Node* getInorderPredecessor(Node* subtree) {
+    while (subtree != nullptr && subtree->right != nullptr) {
+        subtree = subtree->right;
+    }
+
+    return subtree;
+}
+
+void deleteNode(Node*& root) {
     Node* tempPtr{root};
 
+    // the first two conditions handles both node with no children and node with one child
     if (root->left == nullptr) {
         root = root->right;
         delete tempPtr;
@@ -142,6 +161,10 @@ void deleteNode(Node*& root, int value) {
         root = root->left;
         delete tempPtr;
     } else {
+        // case where node with two children
+        // 1) get the logical or inorder predecessor/successor
+        // 2) assign node to delete the value of the predecessor/successor node
+        // 3) delete the predecessor/successor node by passing the respective subtree of the original node to delete
         int logicalPredecessorValue{getInorderPredecessor(root->left)->data};
         root->data = logicalPredecessorValue;
         deleteFromTree(root->left, logicalPredecessorValue);
@@ -158,6 +181,6 @@ void deleteFromTree(Node*& root, int value) {
     } else if (value > root->data) {
         deleteFromTree(root->right, value);
     } else {
-        deleteNode(root, value);
+        deleteNode(root);
     }
 }
