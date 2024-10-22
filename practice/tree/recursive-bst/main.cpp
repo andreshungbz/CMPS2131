@@ -25,6 +25,7 @@ void printAncestors(Node* root, int value);
 void printAncestorsRecursive(Node* root, int value);
 void printAncestorsRecursiveReverse(Node* root, int value);
 // exercise 29
+// assumption: valid range is from initial min and max
 bool isBST(Node* root, int min = -100000, int max = 100000);
 // exercise 30
 int leafCount(Node* root);
