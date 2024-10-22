@@ -117,9 +117,12 @@ Node* retrieveNode(Node*& root, int value) {
         return nullptr;
     }
 
+    // checks value at node
     if (root->data == value) {
         return root;
-    } else if (value < root->data) {
+    }
+
+    if (value < root->data) {
         return retrieveNode(root->left, value);
     } else {
         return retrieveNode(root->right, value);
@@ -131,6 +134,7 @@ Node* retrieveParentNode(Node* root, int value) {
         return nullptr;
     }
 
+    // checks value at node ahead
     if ((root->left != nullptr && root->left->data == value) ||
         (root->right != nullptr && root->right->data == value)) {
         return root;
