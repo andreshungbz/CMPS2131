@@ -18,6 +18,10 @@ Node* getInorderPredecessor(Node* subtree);
 void deleteNode(Node*& root);
 void deleteFromTree(Node*& root, int value);
 
+// exercise 26, 27, 28 on page 521 cpp-data-structures 3rd nell dale
+void printAncestors(Node* root, int value);
+void printAncestorsRecursive(Node* root, int value);
+void printAncestorsRecursiveReverse(Node* root, int value);
 
 int main() {
     std::cout << std::boolalpha;
@@ -35,6 +39,10 @@ int main() {
 
     std::cout << "Tree Node Count: " << treeNodeCount(root) << '\n';
     std::cout << "Tree Height: " << treeHeight(root) << '\n';
+
+    std::cout << "Ancestors of Node with 1:";
+    printAncestorsRecursiveReverse(root, 1);
+    std::cout << '\n';
 
     std::cout << "10 exists in tree: " << static_cast<bool>(retrieveNode(root, 10)) << '\n';
     std::cout << "16 exists in tree: " << static_cast<bool>(retrieveNode(root, 16)) << '\n';
@@ -188,4 +196,64 @@ void deleteFromTree(Node*& root, int value) {
     } else {
         deleteNode(root);
     }
+}
+
+void printAncestors(Node* root, int value) {
+    if (root == nullptr) {
+        std::cout << "Tree is empty.\n";
+        return;
+    }
+
+    Node* currentPtr{root};
+    while (currentPtr != nullptr && currentPtr->data != value) {
+        if (value < currentPtr->data) {
+            currentPtr = currentPtr->left;
+        } else {
+            currentPtr = currentPtr->right;
+        }
+    }
+
+    // node with target value doesn't exist
+    if (currentPtr == nullptr) {
+        std::cout << "No nodes in the tree with target value.\n";
+        return;
+    }
+
+    // from this point there is a node with target value
+    currentPtr = root;
+    while (currentPtr->data != value) {
+        std::cout << ' ' << currentPtr->data;
+
+        if (value < currentPtr->data) {
+            currentPtr = currentPtr->left;
+        } else {
+            currentPtr = currentPtr->right;
+        }
+    }
+}
+
+void printAncestorsRecursive(Node* root, int value) {
+    if (root == nullptr || root->data == value) {
+        return;
+    }
+
+    std::cout << ' ' << root->data;
+    if (value < root->data) {
+        printAncestorsRecursive(root->left, value);
+    } else {
+        printAncestorsRecursive(root->right, value);
+    }
+}
+
+void printAncestorsRecursiveReverse(Node* root, int value) {
+    if (root == nullptr || root->data == value) {
+        return;
+    }
+
+    if (value < root->data) {
+        printAncestorsRecursiveReverse(root->left, value);
+    } else {
+        printAncestorsRecursiveReverse(root->right, value);
+    }
+    std::cout << ' ' << root->data;
 }
