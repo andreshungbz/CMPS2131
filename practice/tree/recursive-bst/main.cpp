@@ -18,27 +18,15 @@ Node* getInorderPredecessor(Node* subtree);
 void deleteNode(Node*& root);
 void deleteFromTree(Node*& root, int value);
 
-// exercise 26, 27, 28 on page 521 cpp-data-structures 3rd nell dale
+// from starting page 521 cpp-data-structures 3rd nell dale
+
+// exercises 26, 27, 28
 void printAncestors(Node* root, int value);
 void printAncestorsRecursive(Node* root, int value);
 void printAncestorsRecursiveReverse(Node* root, int value);
 
-bool isBST(Node* root, int min = -100000, int max = 100000) {
-    if (root == nullptr) {
-        return true;
-    }
-
-    // check if current node's value is within valid range
-    if (root->data <= min || root->data >= max) {
-        return false;
-    }
-
-    // recursively check left and right subtrees
-    // left subtree values must be less than current node
-    // right subtree values must be greater than current node
-    return isBST(root->left, min, root->data) &&
-           isBST(root->right, root->data, max);
-}
+// exercise 29
+bool isBST(Node* root, int min, int max);
 
 int main() {
     std::cout << std::boolalpha;
@@ -275,4 +263,21 @@ void printAncestorsRecursiveReverse(Node* root, int value) {
         printAncestorsRecursiveReverse(root->right, value);
     }
     std::cout << ' ' << root->data;
+}
+
+bool isBST(Node* root, int min = -100000, int max = 100000) {
+    if (root == nullptr) {
+        return true;
+    }
+
+    // check if current node's value is within valid range
+    if (root->data <= min || root->data >= max) {
+        return false;
+    }
+
+    // recursively check left and right subtrees
+    // left subtree values must be less than current node
+    // right subtree values must be greater than current node
+    return isBST(root->left, min, root->data) &&
+           isBST(root->right, root->data, max);
 }
