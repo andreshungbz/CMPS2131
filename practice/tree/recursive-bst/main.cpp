@@ -34,6 +34,9 @@ int leafCount(Node* root);
 // exercise 31
 int singleParentCount(Node* root);
 
+//exercise 32
+int nodesLessThanValueCount(Node* root, int value);
+
 int main() {
     std::cout << std::boolalpha;
 
@@ -59,6 +62,7 @@ int main() {
 
     std::cout << "Number of Leaf Nodes: " << leafCount(root) << '\n';
     std::cout << "Number of Single Parent Nodes: " << singleParentCount(root) << '\n';
+    std::cout << "Number of Nodes less than 8: " << nodesLessThanValueCount(root, 8) << '\n';
 
     std::cout << "10 exists in tree: " << static_cast<bool>(retrieveNode(root, 10)) << '\n';
     std::cout << "16 exists in tree: " << static_cast<bool>(retrieveNode(root, 16)) << '\n';
@@ -315,4 +319,17 @@ int singleParentCount(Node* root) {
     }
 
     return count + singleParentCount(root->left) + singleParentCount(root->right);
+}
+
+int nodesLessThanValueCount(Node* root, int value) {
+    if (root == nullptr) {
+        return 0;
+    }
+
+    int count{0};
+    if (root->data < value) {
+        count = 1;
+    }
+
+    return count + nodesLessThanValueCount(root->left, value) + nodesLessThanValueCount(root->right, value);
 }
