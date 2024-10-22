@@ -31,6 +31,9 @@ bool isBST(Node* root, int min = -100000, int max = 100000);
 // exercise 30
 int leafCount(Node* root);
 
+// exercise 31
+int singleParentCount(Node* root);
+
 int main() {
     std::cout << std::boolalpha;
 
@@ -55,6 +58,7 @@ int main() {
     std::cout << "isBST: " << isBST(root) << '\n';
 
     std::cout << "Number of Leaf Nodes: " << leafCount(root) << '\n';
+    std::cout << "Number of Single Parent Nodes: " << singleParentCount(root) << '\n';
 
     std::cout << "10 exists in tree: " << static_cast<bool>(retrieveNode(root, 10)) << '\n';
     std::cout << "16 exists in tree: " << static_cast<bool>(retrieveNode(root, 16)) << '\n';
@@ -308,4 +312,36 @@ int leafCount(Node* root) {
     }
 
     return leftLeafCount + rightLeafCount;
+}
+
+int singleParentCount(Node* root) {
+    // empty tree
+    if (root == nullptr) {
+        return 0;
+    }
+
+    // leaf node
+    if (!root->left && !root->right) {
+        return 0;
+    }
+
+    int leftSingleParentCount{0};
+    int rightSingleParentCount{0};
+
+    if (root->left) {
+        leftSingleParentCount += singleParentCount(root->left);
+    }
+    if (root->right) {
+        rightSingleParentCount += singleParentCount(root->right);
+    }
+
+    // increments if single-child node
+    if (root->left && !root->right) {
+        ++leftSingleParentCount;
+    }
+    if (root->right && !root->left) {
+        ++rightSingleParentCount;
+    }
+
+    return leftSingleParentCount + rightSingleParentCount;
 }
