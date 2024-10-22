@@ -28,7 +28,8 @@ void printAncestorsRecursiveReverse(Node* root, int value);
 // exercise 29
 bool isBST(Node* root, int min = -100000, int max = 100000);
 
-
+// exercise 30
+int leafCount(Node* root);
 
 int main() {
     std::cout << std::boolalpha;
@@ -52,6 +53,8 @@ int main() {
     std::cout << '\n';
 
     std::cout << "isBST: " << isBST(root) << '\n';
+
+    std::cout << "Number of Leaf Nodes: " << leafCount(root) << '\n';
 
     std::cout << "10 exists in tree: " << static_cast<bool>(retrieveNode(root, 10)) << '\n';
     std::cout << "16 exists in tree: " << static_cast<bool>(retrieveNode(root, 16)) << '\n';
@@ -282,4 +285,27 @@ bool isBST(Node* root, int min, int max) {
     // right subtree values must be greater than current node
     return isBST(root->left, min, root->data) &&
            isBST(root->right, root->data, max);
+}
+
+int leafCount(Node* root) {
+    if (root == nullptr) {
+        return 0;
+    }
+
+    int leftLeafCount{0};
+    int rightLeafCount{0};
+
+    if (root->left == nullptr && root->right == nullptr) {
+        return 1;
+    }
+
+    if (root->left != nullptr) {
+        leftLeafCount += leafCount(root->left);
+    }
+
+    if (root->right != nullptr) {
+        rightLeafCount += leafCount(root->right);
+    }
+
+    return leftLeafCount + rightLeafCount;
 }
