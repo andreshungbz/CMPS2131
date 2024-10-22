@@ -23,6 +23,36 @@ void printAncestors(Node* root, int value);
 void printAncestorsRecursive(Node* root, int value);
 void printAncestorsRecursiveReverse(Node* root, int value);
 
+// comparison of 1 means you're on the left, 2 means on the right
+bool isBST(Node* root, int parentValue = 0, int comparison = 0) {
+    if (root == nullptr) {
+        return true;
+    }
+
+    if (root->left == nullptr && root->right == nullptr) {
+        if (comparison == 1) {
+            return root->data < parentValue;
+        }
+
+        if (comparison == 2) {
+            return root->data > parentValue;
+        }
+    }
+
+    bool leftIsBST{true};
+    bool rightIsBST{true};
+
+    if (root->left != nullptr) {
+        leftIsBST = isBST(root->left, root->data, 1);
+    }
+
+    if (root->right != nullptr) {
+        rightIsBST = isBST(root->right, root->data, 2);
+    }
+
+    return leftIsBST && rightIsBST;
+}
+
 int main() {
     std::cout << std::boolalpha;
 
@@ -43,6 +73,8 @@ int main() {
     std::cout << "Ancestors of Node with 1:";
     printAncestorsRecursiveReverse(root, 1);
     std::cout << '\n';
+
+    std::cout << "isBST: " << isBST(root) << '\n';
 
     std::cout << "10 exists in tree: " << static_cast<bool>(retrieveNode(root, 10)) << '\n';
     std::cout << "16 exists in tree: " << static_cast<bool>(retrieveNode(root, 16)) << '\n';
