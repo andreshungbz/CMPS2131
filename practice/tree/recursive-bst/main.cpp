@@ -26,7 +26,9 @@ void printAncestorsRecursive(Node* root, int value);
 void printAncestorsRecursiveReverse(Node* root, int value);
 
 // exercise 29
-bool isBST(Node* root, int min, int max);
+bool isBST(Node* root, int min = -100000, int max = 100000);
+
+
 
 int main() {
     std::cout << std::boolalpha;
@@ -265,7 +267,7 @@ void printAncestorsRecursiveReverse(Node* root, int value) {
     std::cout << ' ' << root->data;
 }
 
-bool isBST(Node* root, int min = -100000, int max = 100000) {
+bool isBST(Node* root, int min, int max) {
     if (root == nullptr) {
         return true;
     }
