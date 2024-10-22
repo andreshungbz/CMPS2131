@@ -281,6 +281,7 @@ bool isBST(Node* root, int min, int max) {
     }
 
     // check if current node's value is within valid range
+    // nodes with the same value on the left or right subtrees count as invalid
     if (root->data <= min || root->data >= max) {
         return false;
     }
@@ -288,8 +289,7 @@ bool isBST(Node* root, int min, int max) {
     // recursively check left and right subtrees
     // left subtree values must be less than current node
     // right subtree values must be greater than current node
-    return isBST(root->left, min, root->data) &&
-           isBST(root->right, root->data, max);
+    return isBST(root->left, min, root->data) && isBST(root->right, root->data, max);
 }
 
 int leafCount(Node* root) {
