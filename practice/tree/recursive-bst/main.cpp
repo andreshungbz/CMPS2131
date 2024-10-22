@@ -296,22 +296,11 @@ int leafCount(Node* root) {
         return 0;
     }
 
-    int leftLeafCount{0};
-    int rightLeafCount{0};
-
     if (root->left == nullptr && root->right == nullptr) {
         return 1;
     }
 
-    if (root->left != nullptr) {
-        leftLeafCount += leafCount(root->left);
-    }
-
-    if (root->right != nullptr) {
-        rightLeafCount += leafCount(root->right);
-    }
-
-    return leftLeafCount + rightLeafCount;
+    return leafCount(root->left) + leafCount(root->right);
 }
 
 int singleParentCount(Node* root) {
