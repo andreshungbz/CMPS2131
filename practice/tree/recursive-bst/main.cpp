@@ -24,16 +24,12 @@ void deleteFromTree(Node*& root, int value);
 void printAncestors(Node* root, int value);
 void printAncestorsRecursive(Node* root, int value);
 void printAncestorsRecursiveReverse(Node* root, int value);
-
 // exercise 29
 bool isBST(Node* root, int min = -100000, int max = 100000);
-
 // exercise 30
 int leafCount(Node* root);
-
 // exercise 31
 int singleParentCount(Node* root);
-
 // exercise 32
 int nodesLessThanValueCount(Node* root, int value);
 
