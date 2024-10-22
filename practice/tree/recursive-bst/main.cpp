@@ -309,28 +309,10 @@ int singleParentCount(Node* root) {
         return 0;
     }
 
-    // leaf node
-    if (!root->left && !root->right) {
-        return 0;
+    int count{0};
+    if ((root->left && !root->right) || (root->right && !root->left)) {
+        count = 1;
     }
 
-    int leftSingleParentCount{0};
-    int rightSingleParentCount{0};
-
-    if (root->left) {
-        leftSingleParentCount += singleParentCount(root->left);
-    }
-    if (root->right) {
-        rightSingleParentCount += singleParentCount(root->right);
-    }
-
-    // increments if single-child node
-    if (root->left && !root->right) {
-        ++leftSingleParentCount;
-    }
-    if (root->right && !root->left) {
-        ++rightSingleParentCount;
-    }
-
-    return leftSingleParentCount + rightSingleParentCount;
+    return count + singleParentCount(root->left) + singleParentCount(root->right);
 }
