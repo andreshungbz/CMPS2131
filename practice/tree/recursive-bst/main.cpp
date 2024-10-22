@@ -34,7 +34,7 @@ int leafCount(Node* root);
 // exercise 31
 int singleParentCount(Node* root);
 
-//exercise 32
+// exercise 32
 int nodesLessThanValueCount(Node* root, int value);
 
 int main() {
