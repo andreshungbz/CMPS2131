@@ -11,7 +11,9 @@ public:
 };
 
 int findSmallestValue(Node* root);
+int findSmallestValueRecursive(Node* root);
 int findLargestValue(Node* root);
+int findLargestValueRecursive(Node* root);
 int differenceSmallestLargest(Node* root);
 
 int main() {
@@ -38,6 +40,21 @@ int findSmallestValue(Node* root) {
     return currentPtr->data;
 }
 
+int findSmallestValueRecursive(Node* root) {
+    // empty tree check
+    if (root == nullptr) {
+        return -1;
+    }
+
+    // base case where no more on the left
+    if (!root->left) {
+        return root->data;
+    }
+
+    // keep going left if root->left has more
+    return findSmallestValueRecursive(root->left);
+}
+
 int findLargestValue(Node* root) {
     if (root == nullptr) {
         return -1;
@@ -52,9 +69,24 @@ int findLargestValue(Node* root) {
     return currentPtr->data;
 }
 
+int findLargestValueRecursive(Node* root) {
+    // empty tree check
+    if (root == nullptr) {
+        return -1;
+    }
+
+    // base case where no more on the right
+    if (!root->right) {
+        return root->data;
+    }
+
+    // keep going right if root->right has more
+    return findLargestValueRecursive(root->right);
+}
+
 int differenceSmallestLargest(Node* root) {
-    int smallest = findSmallestValue(root);
-    int largest = findLargestValue(root);
+    int smallest = findSmallestValueRecursive(root);
+    int largest = findLargestValueRecursive(root);
 
     // ASSUMPTION: we are only working with positive node values and anything negative is invalid
     if (smallest == -1 || largest == -1) {
