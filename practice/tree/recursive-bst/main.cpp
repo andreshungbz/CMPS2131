@@ -23,34 +23,21 @@ void printAncestors(Node* root, int value);
 void printAncestorsRecursive(Node* root, int value);
 void printAncestorsRecursiveReverse(Node* root, int value);
 
-// comparison of 1 means you're on the left, 2 means on the right
-bool isBST(Node* root, int parentValue = 0, int comparison = 0) {
+bool isBST(Node* root, int min = -100000, int max = 100000) {
     if (root == nullptr) {
         return true;
     }
 
-    if (root->left == nullptr && root->right == nullptr) {
-        if (comparison == 1) {
-            return root->data < parentValue;
-        }
-
-        if (comparison == 2) {
-            return root->data > parentValue;
-        }
+    // check if current node's value is within valid range
+    if (root->data <= min || root->data >= max) {
+        return false;
     }
 
-    bool leftIsBST{true};
-    bool rightIsBST{true};
-
-    if (root->left != nullptr) {
-        leftIsBST = isBST(root->left, root->data, 1);
-    }
-
-    if (root->right != nullptr) {
-        rightIsBST = isBST(root->right, root->data, 2);
-    }
-
-    return leftIsBST && rightIsBST;
+    // recursively check left and right subtrees
+    // left subtree values must be less than current node
+    // right subtree values must be greater than current node
+    return isBST(root->left, min, root->data) &&
+           isBST(root->right, root->data, max);
 }
 
 int main() {
