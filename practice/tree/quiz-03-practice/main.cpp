@@ -145,6 +145,44 @@ void sumTreeValuesTraverse(IntNode* root, int& result) {
     sumTreeValuesTraverse(root->right, result);
 }
 
+void countGreaterValues(IntNode* root, int value, int& result) {
+    if (!root) {
+        return;
+    }
+
+    if (root->data > value) {
+        ++result;
+    }
+
+    countGreaterValues(root->left, value, result);
+    countGreaterValues(root->right, value, result);
+}
+
+IntNode* searchIntNode(IntNode* root, int value) {
+    while (root != nullptr && root->data != value) {
+        if (value < root->data) {
+            return searchIntNode(root->left, value);
+        } else if (value > root->data) {
+            return searchIntNode(root->right, value);
+        }
+    }
+
+    return root;
+}
+
+int findCountNodesGreaterValue(IntNode* root, int value) {
+    IntNode* targetNode{searchIntNode(root, value)};
+
+    if (!targetNode) {
+        return -1;
+    }
+
+    int greaterCount{0};
+    countGreaterValues(root, value, greaterCount);
+
+    return greaterCount;
+}
+
 int main() {
     // CharNode* root{nullptr};
     // insertNode(root, 'E');
@@ -222,6 +260,8 @@ int main() {
     int sumTree{0};
     sumTreeValuesTraverse(root, sumTree);
     std::cout << "Sum of All Node Values (Traverse): " << sumTree << '\n';
+
+    std::cout << "Count of Nodes Greater than 45: " << findCountNodesGreaterValue(root, 45) << '\n';
 
     return 0;
 }
