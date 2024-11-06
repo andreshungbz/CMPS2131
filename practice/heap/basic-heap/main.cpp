@@ -23,15 +23,15 @@ void printHeapArray() {
 void reHeapUp(int rootIndex, int bottomIndex) {
     // the base case is if we are within bounds, stop at root
     if (bottomIndex > rootIndex) {
-        int parent{(bottomIndex - 1) / 2}; // determine element's parent
+        int parentIndex{(bottomIndex - 1) / 2}; // determine element's parent
 
         // swap and continue re-heap up if element value is greater than parent's value
-        if (heap[parent] < heap[bottomIndex]) {
-            int temp{heap[parent]};
-            heap[parent] = heap[bottomIndex];
+        if (heap[parentIndex] < heap[bottomIndex]) {
+            int temp{heap[parentIndex]};
+            heap[parentIndex] = heap[bottomIndex];
             heap[bottomIndex] = temp;
 
-            reHeapUp(rootIndex, parent);
+            reHeapUp(rootIndex, parentIndex);
         }
     }
 }
@@ -55,11 +55,12 @@ void reHeapDown(int rootIndex, int bottomIndex) {
 
     // the base case is if we are within bounds, leaf nodes will be out of bounds
     if (leftChildIndex <= bottomIndex) {
-        // if left child is the last element, set it as the max
+        // check if current root node has only a single child, which can only happen at the last node
+        // because heap is a complete tree
         if (leftChildIndex == bottomIndex) {
+            // because heap is complete tree, a single child node's child has to be on the left
             maxChildIndex = leftChildIndex;
-        } else {
-            // set max child to the index of the larger child
+        } else { // in case of a node with two children, set max child to the index of the larger child
             if (heap[leftChildIndex] <= heap[rightChildIndex]) {
                 maxChildIndex = rightChildIndex;
             } else {
