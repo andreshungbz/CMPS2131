@@ -13,7 +13,7 @@ public:
     void insert(int);
     void reHeapUp(int);
     void deleteRoot();
-    void reHeapDown(int);
+    void reHeapDown(int, int);
 private:
     std::vector<int> heap{};
 };

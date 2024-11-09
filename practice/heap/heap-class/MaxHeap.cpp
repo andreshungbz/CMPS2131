@@ -43,6 +43,33 @@ void MaxHeap::reHeapUp(int bottomIndex) {
 
 void MaxHeap::deleteRoot() {
     std::cout << "Deleted: " << heap.front() << '\n';
-    heap.erase(heap.begin());
-    reHeapDown(heap.size() - 1);
+    heap[0] = heap.back();
+    heap.erase(heap.end());
+    reHeapDown(0, heap.size() - 1);
+}
+
+void MaxHeap::reHeapDown(int rootIndex, int bottomIndex) {
+    int maxChildIndex;
+    int leftIndex{leftChild(rootIndex)};
+    int rightIndex{rightChild(rootIndex)};
+
+    if (leftIndex <= bottomIndex) {
+        if (leftIndex == bottomIndex) {
+            maxChildIndex = leftIndex;
+        } else {
+            if (heap[leftIndex] < heap[rightIndex]) {
+                maxChildIndex = rightIndex;
+            } else {
+                maxChildIndex = leftIndex;
+            }
+        }
+
+        if (heap[rootIndex] < heap[maxChildIndex]) {
+            int temp{heap[rootIndex]};
+            heap[rootIndex] = heap[maxChildIndex];
+            heap[maxChildIndex] = temp;
+
+            reHeapDown(maxChildIndex, bottomIndex);
+        }
+    }
 }
