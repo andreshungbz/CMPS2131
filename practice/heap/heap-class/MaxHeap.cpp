@@ -42,9 +42,11 @@ void MaxHeap::reHeapUp(int bottomIndex) {
 }
 
 void MaxHeap::deleteRoot() {
+    if (heap.empty()) return;
+
     std::cout << "Deleted: " << heap.front() << '\n';
     heap[0] = heap.back();
-    heap.erase(heap.end());
+    heap.pop_back();
     reHeapDown(0, heap.size() - 1);
 }
 
