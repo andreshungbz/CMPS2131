@@ -12,8 +12,9 @@ public:
     void print() const;
     void insert(int);
     void reHeapUp(int);
-    void deleteRoot();
+    void deleteNode(int);
     void reHeapDown(int, int);
+    int searchNode(int value);
 private:
     std::vector<int> heap{};
 };

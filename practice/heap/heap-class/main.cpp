@@ -9,9 +9,17 @@ int main() {
         maxHeap.insert(i);
     }
 
+    // initial
     maxHeap.print();
-    maxHeap.deleteRoot();
-    maxHeap.deleteRoot();
+
+    // delete root
+    maxHeap.deleteNode(0);
+    maxHeap.deleteNode(0);
+    maxHeap.print();
+
+    // search and delete specific node
+    int nodeIndex(maxHeap.searchNode(20));
+    maxHeap.deleteNode(nodeIndex);
     maxHeap.print();
 
     return 0;

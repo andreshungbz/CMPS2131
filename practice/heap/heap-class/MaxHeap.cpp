@@ -41,13 +41,13 @@ void MaxHeap::reHeapUp(int bottomIndex) {
     }
 }
 
-void MaxHeap::deleteRoot() {
-    if (heap.empty()) return;
+void MaxHeap::deleteNode(int index) {
+    if (heap.empty() || index < 0 || index >= heap.size()) return;
 
-    std::cout << "Deleted: " << heap.front() << '\n';
-    heap[0] = heap.back();
+    std::cout << "Deleted: " << heap[index] << '\n';
+    heap[index] = heap.back();
     heap.pop_back();
-    reHeapDown(0, heap.size() - 1);
+    reHeapDown(index, heap.size() - 1);
 }
 
 void MaxHeap::reHeapDown(int rootIndex, int bottomIndex) {
@@ -74,4 +74,14 @@ void MaxHeap::reHeapDown(int rootIndex, int bottomIndex) {
             reHeapDown(maxChildIndex, bottomIndex);
         }
     }
+}
+
+int MaxHeap::searchNode(int value) {
+    for (int i{0}; i < heap.size(); ++i) {
+        if (heap[i] == value) {
+            return i;
+        }
+    }
+
+    return -1;
 }
