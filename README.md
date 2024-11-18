@@ -10,3 +10,5 @@
 | Course Name    | Data Structures                                             |
 | Section        | 1                                                           |
 | Instructor     | Ms. Vernelle Sylvester, MSc.                                |
+
+Final Project: [huffman-coding-algorithm](https://github.com/andreshungbz/huffman-encoding-program)
