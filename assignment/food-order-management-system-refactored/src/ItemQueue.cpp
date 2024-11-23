@@ -41,6 +41,7 @@ void ItemQueue::processItem() {
     if (firstPtr == lastPtr) {
         delete tempPtr;
         firstPtr = lastPtr = nullptr;
+        --itemCount;
         return;
     }
 
